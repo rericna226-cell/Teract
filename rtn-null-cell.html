@@ -1,0 +1,1718 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>RTN-Null Cell | TERACT Semiconductores</title>
+
+  <style>
+    :root {
+      --rtn-accent: #FF5A1F;
+      --rtn-dark: #0D0A08;
+      --rtn-gold: #D7A441;
+      --rtn-soft: #FFF4EC;
+
+      --bg-dark: var(--rtn-dark);
+      --bg-soft: var(--rtn-soft);
+      --bg-white: #fffaf6;
+      --text-dark: var(--rtn-dark);
+      --text-muted: #5b534e;
+      --text-light: #ffffff;
+      --accent-orange: var(--rtn-accent);
+      --accent-gold: var(--rtn-gold);
+      --border: rgba(13, 10, 8, 0.14);
+      --max-width: 1280px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scrollbar-gutter: stable;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg-soft);
+      color: var(--text-dark);
+      line-height: 1.65;
+    }
+
+    body.menu-open {
+      overflow: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      width: 100%;
+      display: block;
+    }
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+      padding: 28px 6%;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      background: rgba(255, 244, 236, 0.94);
+      color: var(--text-dark);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 46px;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .nav-links a {
+      transition: color 0.25s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--accent-orange);
+    }
+
+    .lang-switcher {
+      position: relative;
+      margin-left: 18px;
+    }
+
+    .lang-switcher.mobile-header {
+      display: none;
+      margin-left: 12px;
+    }
+
+    .lang {
+      appearance: none;
+      height: 42px;
+      padding: 0 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(12,20,34,0.12);
+      background: rgba(255,255,255,0.42);
+      color: inherit;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+    }
+
+    .lang-caret {
+      color: rgba(12,20,34,0.56);
+      font-size: 12px;
+      transition: transform 0.15s ease;
+    }
+
+    .lang-switcher.open .lang-caret {
+      transform: rotate(180deg);
+    }
+
+    .lang-menu {
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 0;
+      min-width: 180px;
+      padding: 8px;
+      border-radius: 18px;
+      border: 1px solid rgba(12,20,34,0.12);
+      background: rgba(255,255,255,0.98);
+      box-shadow: 0 24px 80px rgba(0,0,0,0.18);
+      display: grid;
+      gap: 6px;
+      z-index: 110;
+    }
+
+    .lang-menu a {
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      border-radius: 14px;
+      color: #0c1422;
+      font-size: 14px;
+      font-weight: 700;
+      border: 1px solid transparent;
+      background: transparent;
+    }
+
+    .lang-menu a:hover,
+    .lang-menu a.active {
+      background: rgba(12,20,34,0.04);
+      border-color: rgba(12,20,34,0.06);
+    }
+    .nav-toggle {
+      display: none;
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      border: 1px solid rgba(13, 10, 8, 0.12);
+      background: rgba(255,255,255,0.42);
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      flex-direction: column;
+      padding: 0;
+      cursor: pointer;
+    }
+
+    .nav-toggle span {
+      width: 20px;
+      height: 2px;
+      background: rgba(13, 10, 8, 0.9);
+      border-radius: 999px;
+      display: block;
+    }
+
+    .mobile-backdrop[hidden],
+    .mobile-menu[hidden],
+    .lang-menu[hidden] {
+      display: none;
+    }
+
+    .mobile-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.24);
+      backdrop-filter: blur(2px);
+      z-index: 90;
+    }
+
+    .mobile-menu {
+      position: fixed;
+      top: 86px;
+      left: 14px;
+      right: 14px;
+      background: rgba(255, 247, 241, 0.98);
+      border: 1px solid rgba(13, 10, 8, 0.12);
+      border-radius: 18px;
+      box-shadow: 0 28px 90px rgba(0,0,0,0.18);
+      padding: 12px;
+      display: grid;
+      gap: 8px;
+      z-index: 95;
+    }
+
+    .mobile-menu a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px;
+      border-radius: 14px;
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--text-dark);
+      background: rgba(13,10,8,0.03);
+      border: 1px solid rgba(13,10,8,0.06);
+    }
+
+    .mobile-menu a:hover,
+    .mobile-menu a.active {
+      color: var(--accent-orange);
+      background: rgba(13,10,8,0.06);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 15px 32px;
+      border-radius: 999px;
+      font-weight: 700;
+      border: 1px solid transparent;
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--accent-orange);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #e24b15;
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      border-color: rgba(255,255,255,0.78);
+      color: white;
+    }
+
+    .btn-outline:hover {
+      background: white;
+      color: var(--text-dark);
+      transform: translateY(-2px);
+    }
+
+    .btn-dark {
+      background: var(--bg-dark);
+      color: white;
+    }
+
+    .btn-dark:hover {
+      background: var(--accent-orange);
+      transform: translateY(-2px);
+    }
+
+    section {
+      padding: 110px 6%;
+    }
+
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      font-size: 14px;
+      font-weight: 800;
+      margin-bottom: 22px;
+      color: var(--accent-orange);
+    }
+
+    .section-title {
+      font-size: clamp(42px, 6vw, 78px);
+      line-height: 1;
+      letter-spacing: -3px;
+      margin-bottom: 30px;
+    }
+
+    .section-text {
+      font-size: 20px;
+      color: var(--text-muted);
+      max-width: 780px;
+    }
+
+    /* HERO */
+
+    .hero {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255, 90, 31, 0.16), transparent 26%),
+        linear-gradient(135deg, #160d0a 0%, #2d1710 52%, #4a2518 100%);
+      color: var(--text-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 150px 6% 90px;
+    }
+
+    .hero-content {
+      max-width: 1050px;
+    }
+
+    .product-logo {
+      margin-bottom: 44px;
+    }
+
+    .product-logo-main {
+      font-size: clamp(48px, 7vw, 94px);
+      font-weight: 900;
+      letter-spacing: 8px;
+      line-height: 1;
+    }
+
+    .product-logo-main span {
+      color: var(--accent-orange);
+    }
+
+    .product-logo-sub {
+      margin-top: 18px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 7px;
+      color: rgba(255,255,255,0.72);
+    }
+
+    .hero h1 {
+      font-size: clamp(42px, 6vw, 78px);
+      line-height: 1;
+      letter-spacing: -3px;
+      margin-bottom: 28px;
+    }
+
+    .hero p {
+      max-width: 900px;
+      margin: 0 auto 36px;
+      font-size: clamp(18px, 2vw, 24px);
+      color: rgba(255,255,255,0.9);
+    }
+
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    /* SPLIT SECTIONS */
+
+    .split {
+      background: var(--bg-white);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .split-grid {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .split-image {
+      min-height: 560px;
+      background:
+        radial-gradient(circle at 18% 20%, rgba(255,255,255,0.18), transparent 22%),
+        linear-gradient(135deg, #ff8a52, #8d3218 56%, #3a160e);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.14);
+    }
+
+    .split-content p {
+      margin-bottom: 24px;
+      font-size: 19px;
+      color: var(--text-muted);
+    }
+
+    .technical-note {
+      margin-top: 34px;
+      padding: 26px;
+      border-left: 4px solid var(--accent-orange);
+      background: linear-gradient(180deg, #fff7f0, var(--bg-soft));
+      color: var(--text-dark);
+      font-size: 18px;
+    }
+
+    /* SOLUTION */
+
+    .solution {
+      background: var(--bg-soft);
+    }
+
+    .solution-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      margin-top: 58px;
+    }
+
+    .solution-card {
+      background: var(--bg-white);
+      padding: 46px;
+      border: 1px solid var(--border);
+      min-height: 300px;
+    }
+
+    .solution-card-number {
+      font-size: 14px;
+      font-weight: 900;
+      color: var(--accent-orange);
+      letter-spacing: 3px;
+      margin-bottom: 24px;
+    }
+
+    .solution-card h3 {
+      font-size: 29px;
+      line-height: 1.15;
+      margin-bottom: 18px;
+    }
+
+    .solution-card p {
+      color: var(--text-muted);
+      font-size: 18px;
+    }
+
+    /* BENEFITS */
+
+    .benefits {
+      background: var(--bg-dark);
+      color: white;
+    }
+
+    .benefits .section-text {
+      color: rgba(255,255,255,0.75);
+    }
+
+    .benefit-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: rgba(215, 164, 65, 0.22);
+      margin-top: 58px;
+      border: 1px solid rgba(215, 164, 65, 0.22);
+    }
+
+    .benefit-card {
+      background: var(--bg-dark);
+      padding: 44px 34px;
+      min-height: 330px;
+    }
+
+    .benefit-card h3 {
+      font-size: 24px;
+      line-height: 1.15;
+      margin-bottom: 18px;
+      color: white;
+    }
+
+    .benefit-card p {
+      color: rgba(255,255,255,0.72);
+      font-size: 17px;
+    }
+
+    /* MANUFACTURE */
+
+    .manufacture {
+      background: #fffaf6;
+    }
+
+    .manufacture-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+      align-items: start;
+      max-width: 920px;
+    }
+
+    .industry-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+      gap: 20px;
+      align-items: start;
+      margin-top: 28px;
+    }
+
+    .industry-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .industry {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 22px;
+      border-radius: 18px;
+      border: 1px solid rgba(13, 10, 8, 0.14);
+      background: rgba(255,255,255,0.62);
+      color: var(--text-dark);
+      font: inherit;
+      font-size: 17px;
+      font-weight: 700;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.22s ease;
+    }
+
+    .industry:hover {
+      border-color: rgba(255, 90, 31, 0.34);
+      transform: translateY(-1px);
+    }
+
+    .industry.active {
+      background: var(--bg-dark);
+      border-color: var(--accent-orange);
+      color: white;
+      box-shadow: 0 18px 40px rgba(13, 10, 8, 0.16);
+    }
+
+    .ind-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 90, 31, 0.12);
+      color: var(--accent-orange);
+      flex: 0 0 46px;
+      transition: all 0.22s ease;
+    }
+
+    .industry.active .ind-icon {
+      background: rgba(255,255,255,0.12);
+      color: #ffd6c5;
+    }
+
+    .industry-panel {
+      padding: 24px;
+      border-radius: 28px;
+      border: 1px solid var(--border);
+      background: var(--bg-white);
+      box-shadow: 0 18px 50px rgba(13, 10, 8, 0.08);
+    }
+
+    .panel-image {
+      position: relative;
+      min-height: 300px;
+      border-radius: 22px;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+      padding: 24px;
+      background:
+        radial-gradient(circle at 18% 22%, rgba(255,255,255,0.65), transparent 28%),
+        linear-gradient(135deg, rgba(255, 90, 31, 0.96), rgba(215, 164, 65, 0.84));
+    }
+
+    .panel-image::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(rgba(255,255,255,0.12) 1px, transparent 1px);
+      background-size: 100% 56px;
+      opacity: 0.24;
+    }
+
+    .panel-image::after {
+      content: "";
+      position: absolute;
+      inset: 16% 12%;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.24);
+      box-shadow:
+        0 0 0 26px rgba(255,255,255,0.05),
+        0 0 0 52px rgba(255,255,255,0.04);
+    }
+
+    .panel-image[data-tone="stoich"] {
+      background:
+        radial-gradient(circle at 18% 22%, rgba(255,255,255,0.58), transparent 28%),
+        linear-gradient(135deg, #ff7d45, #7a2214 82%);
+    }
+
+    .panel-image[data-tone="electrodes"] {
+      background:
+        radial-gradient(circle at 18% 22%, rgba(255,255,255,0.5), transparent 28%),
+        linear-gradient(135deg, #d7a441, #59351a 84%);
+    }
+
+    .panel-image[data-tone="beol"] {
+      background:
+        radial-gradient(circle at 18% 22%, rgba(255,255,255,0.48), transparent 28%),
+        linear-gradient(135deg, #ff5a1f, #0d0a08 82%);
+    }
+
+    .panel-image-overlay {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 34%;
+      border-top: 1px solid rgba(255,255,255,0.22);
+      background: linear-gradient(90deg, rgba(255,255,255,0.06), rgba(13, 10, 8, 0.4));
+      box-shadow:
+        0 0 40px rgba(255, 255, 255, 0.06),
+        inset 0 0 50px rgba(255, 255, 255, 0.05);
+    }
+
+    .panel-image-label {
+      position: relative;
+      z-index: 1;
+      max-width: 320px;
+      padding: 12px 16px;
+      border-radius: 14px;
+      background: rgba(13, 10, 8, 0.55);
+      color: white;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+    }
+
+    .industry-panel h3 {
+      margin-top: 22px;
+      margin-bottom: 12px;
+      font-size: 28px;
+      line-height: 1.1;
+    }
+
+    .industry-panel p {
+      font-size: 18px;
+      color: var(--text-muted);
+    }
+
+    /* VALIDATION */
+
+    .validation {
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255, 90, 31, 0.16), transparent 22%),
+        linear-gradient(135deg, rgba(30, 13, 9, 0.98), rgba(13, 10, 8, 0.96));
+      color: white;
+      text-align: center;
+    }
+
+    .validation .section-text {
+      color: rgba(255,255,255,0.82);
+      margin: 0 auto;
+    }
+
+    .validation-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 22px;
+      margin-top: 60px;
+    }
+
+    .validation-step {
+      padding: 34px 26px;
+      border: 1px solid rgba(255,255,255,0.22);
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(8px);
+      text-align: left;
+    }
+
+    .validation-step span {
+      color: var(--accent-orange);
+      font-weight: 900;
+      letter-spacing: 2px;
+      font-size: 13px;
+    }
+
+    .validation-step h3 {
+      margin-top: 18px;
+      margin-bottom: 12px;
+      font-size: 22px;
+    }
+
+    .validation-step p {
+      color: rgba(255,255,255,0.72);
+      font-size: 16px;
+    }
+
+    /* CTA */
+
+    .cta {
+      background: var(--bg-soft);
+      text-align: center;
+    }
+
+    .cta p {
+      max-width: 760px;
+      margin: 0 auto 34px;
+      font-size: 20px;
+      color: var(--text-muted);
+    }
+
+    .cta-actions {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .contact-section {
+      background: linear-gradient(180deg, #2b140d, var(--bg-dark));
+      color: var(--text-light);
+    }
+
+    .contact-grid {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 34px;
+      align-items: start;
+    }
+
+    .contact-copy p {
+      max-width: 38ch;
+      margin-bottom: 0;
+      font-size: 20px;
+      color: rgba(255,255,255,0.78);
+    }
+
+    .cta-points {
+      display: grid;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .cta-points div {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: rgba(255,255,255,0.88);
+      font-size: 15px;
+    }
+
+    .cta-points span {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: rgba(255, 90, 31, 0.96);
+      box-shadow: 0 0 18px rgba(255, 90, 31, 0.34);
+      flex: 0 0 auto;
+    }
+
+    .cta-form-card {
+      background: rgba(255,250,246,0.98);
+      color: var(--text-dark);
+      padding: 34px;
+      border-radius: 30px;
+      box-shadow: 0 28px 70px rgba(0,0,0,0.22);
+    }
+
+    .cta-form-card h3 {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .cta-form-card p {
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--text-muted);
+      margin-bottom: 22px;
+    }
+
+    .contact-form {
+      display: grid;
+      gap: 14px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+    }
+
+    .field label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-dark);
+      letter-spacing: 0.02em;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      border: 1px solid rgba(13, 10, 8, 0.12);
+      border-radius: 16px;
+      background: #fff;
+      color: var(--text-dark);
+      padding: 14px 15px;
+      font: inherit;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color: rgba(255, 90, 31, 0.72);
+      box-shadow: 0 0 0 4px rgba(255, 90, 31, 0.14);
+    }
+
+    .field textarea {
+      min-height: 132px;
+      resize: vertical;
+    }
+
+    .form-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+
+    .cta-form-card .btn-primary {
+      background: var(--bg-dark);
+      color: #fff;
+      border-color: var(--bg-dark);
+    }
+
+    .cta-form-card .btn-primary:hover {
+      background: var(--accent-orange);
+      border-color: var(--accent-orange);
+    }
+
+    .form-status {
+      font-size: 13px;
+      font-weight: 600;
+      color: #6a534a;
+    }
+
+    .form-note {
+      font-size: 13px;
+      color: #705d55;
+      margin-top: 4px;
+    }
+
+    .form-consent {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 13px;
+      color: #30403f;
+      line-height: 1.45;
+      margin-top: 6px;
+    }
+
+    .form-consent input {
+      margin-top: 3px;
+    }
+
+    .form-consent a {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* FOOTER */
+
+    footer {
+      border-top: 1px solid var(--border);
+      background: #fffaf6;
+      padding: 70px 6% 36px;
+    }
+
+    .footer-grid {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 60px;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent-orange);
+    }
+
+    .footer-title {
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-size: 14px;
+      font-weight: 800;
+      margin-bottom: 18px;
+    }
+
+    .footer-bottom {
+      max-width: var(--max-width);
+      margin: 60px auto 0;
+      padding-top: 28px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      gap: 30px;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 960px) {
+      .nav-links {
+        gap: 24px;
+        font-size: 13px;
+      }
+
+      .split-grid,
+      .solution-grid,
+      .manufacture-grid,
+      .footer-grid,
+      .contact-grid,
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .benefit-grid,
+      .validation-steps {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .industry-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .split-image {
+        min-height: 420px;
+      }
+    }
+
+    @media (max-width: 620px) {
+      section {
+        padding: 80px 6%;
+      }
+
+      .navbar {
+        padding: 22px 5%;
+        justify-content: flex-end;
+        gap: 10px;
+      }
+
+      .nav-links,
+      .navbar > .lang-switcher:not(.mobile-header) {
+        display: none;
+      }
+
+      .lang-switcher.mobile-header {
+        display: block;
+      }
+
+      .lang-switcher.mobile-header .lang {
+        border-radius: 12px;
+      }
+
+      .nav-toggle {
+        display: inline-flex;
+      }
+
+      .hero {
+        padding-top: 140px;
+      }
+
+      .benefit-grid,
+      .validation-steps {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+      }
+
+      .product-logo-main {
+        letter-spacing: 3px;
+      }
+
+      .product-logo-sub {
+        letter-spacing: 4px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="navbar">
+    <nav class="nav-links">
+      <a href="index.html">Inicio</a>
+      <a href="rtn-null-cell.html" class="active">RTN-Null Cell</a>
+      <a href="hypergate.html">HyperGate</a>
+      <a href="#contacto">Contáctanos</a>
+    </nav>
+    <div class="lang-switcher" id="langSwitcher">
+      <button class="lang" type="button" aria-label="Seleccionar idioma" aria-haspopup="true" aria-expanded="false" aria-controls="langMenu" id="langToggle">
+        <span>ES</span>
+        <span class="lang-caret" aria-hidden="true">⌄</span>
+      </button>
+      <div class="lang-menu" id="langMenu" hidden>
+        <a href="rtn-null-cell.html" class="active">
+          <span>Español</span>
+        </a>
+        <a href="rtn-null-cell-en.html">
+          <span>English</span>
+        </a>
+      </div>
+    </div>
+    <div class="lang-switcher mobile-header" id="langSwitcherMobile">
+      <button class="lang" type="button" aria-label="Seleccionar idioma" aria-haspopup="true" aria-expanded="false" aria-controls="langMenuMobile" id="langToggleMobile">
+        <span>ES</span>
+        <span class="lang-caret" aria-hidden="true">⌄</span>
+      </button>
+      <div class="lang-menu" id="langMenuMobile" hidden>
+        <a href="rtn-null-cell.html" class="active">
+          <span>Español</span>
+        </a>
+        <a href="rtn-null-cell-en.html">
+          <span>English</span>
+        </a>
+      </div>
+    </div>
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="Abrir menú" aria-controls="mobileMenu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <div class="mobile-backdrop" id="mobileBackdrop" hidden></div>
+  <div class="mobile-menu" id="mobileMenu" hidden>
+    <a href="index.html">Inicio</a>
+    <a href="rtn-null-cell.html" class="active">RTN-Null Cell</a>
+    <a href="hypergate.html">HyperGate</a>
+    <a href="#contacto">Contáctanos</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="product-logo">
+        <div class="product-logo-main">RTN-NULL <span>CELL</span></div>
+        <div class="product-logo-sub">Memristor · Redefiniendo la pureza de la señal</div>
+      </div>
+
+      <h1>RTN-Null Cell: Arquitectura ReRAM para Estabilidad de Lectura</h1>
+
+      <p>
+        Una arquitectura de celda VCM diseñada para reducir ruido telegráfico aleatorio
+        y mejorar la confiabilidad de memorias resistivas de próxima generación.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#problema" class="btn btn-primary">Explorar tecnología</a>
+        <a href="#contacto" class="btn btn-outline js-contact-interest" data-interest="whitepaper">Solicitar whitepaper</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEM -->
+  <section class="split" id="problema">
+    <div class="container split-grid">
+      <div class="split-image" aria-label="Visualización de ruido y variabilidad en memoria"></div>
+
+      <div class="split-content">
+        <p class="eyebrow">El problema</p>
+        <h2 class="section-title">RTN, TLS y variabilidad en ReRAM</h2>
+
+        <p>
+          En memorias VCM basadas en óxido de hafnio, el almacenamiento depende de la
+          formación y disolución de filamentos conductivos asociados a vacantes de oxígeno.
+        </p>
+
+        <p>
+          A escala atómica, los electrones pueden quedar atrapados y liberarse en los
+          bordes de estas vacantes, generando sistemas de dos niveles. Esta fluctuación
+          puede alterar los niveles de lectura, especialmente en el estado de alta resistencia.
+        </p>
+
+        <p>
+          El resultado es variabilidad ciclo a ciclo, ruido telegráfico aleatorio y menor
+          margen para operaciones multinivel en memorias resistivas.
+        </p>
+
+        <div class="technical-note">
+          RTN-Null Cell aborda este problema como un desafío de arquitectura e interfaz,
+          no únicamente como un problema de materiales o mitigación posterior.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOLUTION -->
+  <section class="solution">
+    <div class="container">
+      <p class="eyebrow">La solución</p>
+      <h2 class="section-title">Stack dieléctrico calibrado con arquitectura bilayer</h2>
+
+      <p class="section-text">
+        RTN-Null Cell propone una arquitectura de celda basada en una configuración
+        bilayer diseñada para controlar el comportamiento de vacantes, reducir fluctuaciones
+        interfaciales y mejorar estabilidad de lectura bajo condiciones operativas.
+      </p>
+
+      <div class="solution-grid">
+        <article class="solution-card">
+          <div class="solution-card-number">01</div>
+          <h3>Capa interfacial activa</h3>
+          <p>
+            Subcapa diseñada para habilitar el switching resistivo, manteniendo control
+            sobre la densidad de vacantes y evitando una transición no deseada hacia
+            un estado conductor permanente.
+          </p>
+        </article>
+
+        <article class="solution-card">
+          <div class="solution-card-number">02</div>
+          <h3>Capa bulk aislante</h3>
+          <p>
+            Región estequiométrica orientada a soportar la capa activa, reducir corrientes
+            de fuga espurias y preservar el aislamiento funcional del stack.
+          </p>
+        </article>
+
+        <article class="solution-card">
+          <div class="solution-card-number">03</div>
+          <h3>Control de interfaz</h3>
+          <p>
+            La relación entre ambas capas busca estabilizar la interfaz donde aparecen
+            fluctuaciones críticas, reduciendo la probabilidad de emisión electrónica
+            asociada al RTN.
+          </p>
+        </article>
+
+        <article class="solution-card">
+          <div class="solution-card-number">04</div>
+          <h3>Arquitectura orientada a manufactura</h3>
+          <p>
+            El enfoque está pensado para trabajar con procesos y materiales conocidos
+            en la industria, priorizando una ruta de integración realista.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- BENEFITS -->
+  <section class="benefits">
+    <div class="container">
+      <p class="eyebrow">Ventajas esperadas</p>
+      <h2 class="section-title">Estabilidad, reducción de ruido y compatibilidad industrial</h2>
+
+      <p class="section-text">
+        Las ventajas descritas representan objetivos técnicos esperados y deben validarse
+        mediante caracterización eléctrica, análisis de ruido y comparación contra celdas
+        de control fabricadas bajo condiciones equivalentes.
+      </p>
+
+      <div class="benefit-grid">
+        <article class="benefit-card">
+          <h3>Reducción de RTN</h3>
+          <p>
+            Diseño orientado a disminuir fluctuaciones de lectura asociadas a trampas
+            electrónicas y defectos interfaciales.
+          </p>
+        </article>
+
+        <article class="benefit-card">
+          <h3>Estabilidad HRS</h3>
+          <p>
+            Mayor control del estado de alta resistencia para mejorar confiabilidad
+            de lectura y reducir dispersión operativa.
+          </p>
+        </article>
+
+        <article class="benefit-card">
+          <h3>MLC / TLC potencial</h3>
+          <p>
+            Al reducir ruido y variabilidad, se busca habilitar ventanas de resistencia
+            más estables para operación multinivel.
+          </p>
+        </article>
+
+        <article class="benefit-card">
+          <h3>Compatibilidad CMOS</h3>
+          <p>
+            Arquitectura orientada a materiales y procesos estándar, evitando dependencia
+            de materiales exóticos o rutas de fabricación radicalmente nuevas.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- MANUFACTURE -->
+  <section class="manufacture">
+    <div class="container manufacture-grid">
+      <div>
+        <p class="eyebrow">Manufactura</p>
+        <h2 class="section-title">Diseñada para procesos CMOS BEOL</h2>
+
+        <p class="section-text">
+          La propuesta se enfoca en arquitectura, metrología y parámetros de deposición,
+          más que en reemplazar por completo la química industrial existente.
+        </p>
+
+        <div class="industry-layout">
+          <div class="industry-list">
+            <button class="industry active" data-panel="ald" aria-pressed="true" type="button">
+              <span class="ind-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <rect x="5" y="3" width="14" height="18" rx="2"></rect>
+                  <path d="M9 7h6"></path>
+                  <path d="M9 11h6"></path>
+                  <path d="M9 15h6"></path>
+                </svg>
+              </span>
+              HfO₂ mediante ALD
+            </button>
+
+            <button class="industry" data-panel="stoich" aria-pressed="false" type="button">
+              <span class="ind-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <circle cx="8" cy="8" r="3"></circle>
+                  <circle cx="16" cy="16" r="3"></circle>
+                  <path d="M10.5 10.5l3 3"></path>
+                  <path d="M16 5v4"></path>
+                  <path d="M5 16h4"></path>
+                </svg>
+              </span>
+              Modulación de estequiometría
+            </button>
+
+            <button class="industry" data-panel="electrodes" aria-pressed="false" type="button">
+              <span class="ind-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M4 7h16"></path>
+                  <path d="M4 12h16"></path>
+                  <path d="M4 17h16"></path>
+                  <path d="M8 4v16"></path>
+                  <path d="M16 4v16"></path>
+                </svg>
+              </span>
+              Electrodos TiN / Pt / W
+            </button>
+
+            <button class="industry" data-panel="beol" aria-pressed="false" type="button">
+              <span class="ind-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M12 2v20"></path>
+                  <path d="M7 6h10"></path>
+                  <path d="M5 12h14"></path>
+                  <path d="M7 18h10"></path>
+                </svg>
+              </span>
+              Integración BEOL
+            </button>
+          </div>
+
+          <div class="industry-panel" id="industry-panel">
+            <div class="panel-image" id="panel-image" data-tone="ald">
+              <div class="panel-image-overlay"></div>
+              <div class="panel-image-label" id="panel-image-label">Proceso compatible con flujo industrial</div>
+            </div>
+            <h3 id="panel-title">HfO₂ mediante ALD</h3>
+            <p id="panel-copy">
+              Uso de óxido de hafnio depositado por Atomic Layer Deposition como base
+              dieléctrica compatible con flujos industriales.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALIDATION -->
+  <section class="validation">
+    <div class="container">
+      <p class="eyebrow">Ruta de validación</p>
+      <h2 class="section-title">Caracterización eléctrica y comparación contra control</h2>
+
+      <p class="section-text">
+        La validación debe demostrar reducción de ruido, estabilidad de lectura y
+        comportamiento repetible frente a una celda ReRAM de referencia fabricada bajo
+        condiciones comparables.
+      </p>
+
+      <div class="validation-steps">
+        <article class="validation-step">
+          <span>01</span>
+          <h3>Fabricación de lote de prueba</h3>
+          <p>
+            Deposición del stack bilayer con parámetros definidos para pruebas
+            comparativas.
+          </p>
+        </article>
+
+        <article class="validation-step">
+          <span>02</span>
+          <h3>Mediciones I-V</h3>
+          <p>
+            Caracterización de switching resistivo, ventanas de lectura y corrientes
+            de fuga.
+          </p>
+        </article>
+
+        <article class="validation-step">
+          <span>03</span>
+          <h3>Mediciones C-V y ruido</h3>
+          <p>
+            Evaluación de comportamiento interfacial, variabilidad y firmas de RTN/TLS.
+          </p>
+        </article>
+
+        <article class="validation-step">
+          <span>04</span>
+          <h3>Comparación contra control</h3>
+          <p>
+            Análisis frente a dispositivos de referencia para validar mejora estadística
+            y repetibilidad.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta" id="whitepaper">
+    <div class="container">
+      <p class="eyebrow">Whitepaper y contacto técnico</p>
+      <h2 class="section-title">Explora RTN-Null Cell bajo colaboración técnica</h2>
+
+      <p>
+        Comparte tu interés técnico o estratégico para revisar el whitepaper, evaluar
+        una ruta de validación conjunta o definir una estructura de colaboración adecuada
+        bajo NDA.
+      </p>
+
+      <div class="cta-actions">
+        <a href="#contacto" class="btn btn-dark js-contact-interest" data-interest="whitepaper">Solicitar whitepaper</a>
+        <a href="rtn-null-cell-detalle.html" class="btn btn-primary">Ver detalle técnico</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact-section" id="contacto">
+    <div class="contact-grid">
+      <div class="contact-copy">
+        <p class="eyebrow">Contacto técnico</p>
+        <h2 class="section-title">Hablemos de validación, NDA o colaboración técnica</h2>
+
+        <p>
+          Si quieres revisar el whitepaper, explorar una ruta experimental o conversar
+          sobre la mejor ruta de colaboración para RTN-Null Cell, comparte tu objetivo y
+          preparamos el siguiente paso adecuado.
+        </p>
+
+        <div class="cta-points">
+          <div><span></span> Solicitudes de whitepaper, NDA o validación conjunta.</div>
+          <div><span></span> Evaluación técnica sobre ReRAM, VCM y reducción de RTN.</div>
+          <div><span></span> Modalidades flexibles de integración, colaboración o transferencia tecnológica.</div>
+        </div>
+      </div>
+
+      <div class="cta-form-card">
+        <h3>Solicita información técnica</h3>
+        <p>
+          Completa el formulario y armamos la conversación adecuada para revisión técnica,
+          validación comparativa o definición de una ruta de colaboración adecuada.
+        </p>
+
+        <form class="contact-form" id="contact-form">
+          <div class="form-row">
+            <div class="field">
+              <label for="contact-name">Nombre</label>
+              <input id="contact-name" name="name" autocomplete="name" required />
+            </div>
+
+            <div class="field">
+              <label for="contact-company">Empresa o institución</label>
+              <input id="contact-company" name="company" autocomplete="organization" required />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="field">
+              <label for="contact-email">Email</label>
+              <input id="contact-email" name="email" type="email" autocomplete="email" required />
+            </div>
+
+            <div class="field">
+              <label for="contact-phone">Teléfono</label>
+              <input id="contact-phone" name="phone" type="tel" autocomplete="tel" placeholder="+__" required />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="field">
+              <label for="contact-sector">Sector</label>
+              <select id="contact-sector" name="sector" required>
+                <option value="" selected disabled>Selecciona una opción</option>
+                <option value="semiconductores">Empresa de semiconductores</option>
+                <option value="fabless">Fabless</option>
+                <option value="idm">IDM</option>
+                <option value="foundry">Foundry</option>
+                <option value="investigacion">Centro de investigación / universidad</option>
+                <option value="defensa">Defensa / gobierno</option>
+                <option value="inversion">Inversión deep-tech</option>
+                <option value="otro">Otro</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="contact-interest">Interés</label>
+              <select id="contact-interest" name="interest" required>
+                <option value="" selected disabled>Selecciona una opción</option>
+                <option value="whitepaper">Revisar whitepaper</option>
+                <option value="nda">Solicitud de NDA</option>
+                <option value="validacion">Validación técnica ReRAM</option>
+                <option value="licenciamiento">Explorar estructura comercial</option>
+                <option value="tecnica">Conversación técnica</option>
+                <option value="otro">Otro</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="contact-message">Mensaje</label>
+            <textarea
+              id="contact-message"
+              name="message"
+              required
+              placeholder="Comparte tu interés, objetivo experimental, etapa de evaluación o el acceso técnico que necesitas."
+            ></textarea>
+          </div>
+
+          <div class="form-consent">
+            <input id="contact-privacy" name="privacy" type="checkbox" value="accepted" required />
+            <label for="contact-privacy">
+              He leído y acepto el <a href="politica-privacidad.html">aviso de privacidad</a> y autorizo el
+              tratamiento de mis datos conforme a la LFPDPPP.
+            </label>
+          </div>
+
+          <div class="form-actions">
+            <button class="btn btn-primary" type="submit">Enviar solicitud</button>
+            <span class="form-status" id="contact-status" aria-live="polite"></span>
+          </div>
+
+          <div class="form-note">
+            El formulario prepara un correo dirigido a info@teract.com con tu solicitud.
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-links">
+        <a href="index.html">Inicio</a>
+        <a href="rtn-null-cell.html">RTN-Null Cell</a>
+        <a href="hypergate.html">HyperGate</a>
+        <a href="#contacto">Contáctanos</a>
+      </div>
+
+      <div>
+        <p class="footer-title">Oficina Central</p>
+        <p>Puebla, México</p>
+        <p>+52 222 964 8206</p>
+      </div>
+
+      <div>
+        <p class="footer-title">RTN-Null Cell</p>
+        <p>
+          Arquitectura ReRAM/VCM orientada a estabilidad de lectura, reducción de RTN
+          y memoria no volátil de próxima generación.
+        </p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p><a href="politica-privacidad.html">Política de Privacidad</a></p>
+      <p>© 2026 TERACT Semiconductores. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <script>
+    const manufacturePanels = {
+      ald: {
+        title: "HfO₂ mediante ALD",
+        copy: "Uso de óxido de hafnio depositado por Atomic Layer Deposition como base dieléctrica compatible con flujos industriales.",
+        label: "Proceso compatible con flujo industrial",
+        tone: "ald"
+      },
+      stoich: {
+        title: "Modulación de estequiometría",
+        copy: "Gradiente controlado de oxígeno para definir la región activa y preservar estabilidad estructural del stack.",
+        label: "Control fino de vacantes y señal",
+        tone: "stoich"
+      },
+      electrodes: {
+        title: "Electrodos TiN / Pt / W",
+        copy: "Compatibilidad con electrodos metálicos estándar utilizados en arquitecturas avanzadas de memoria y procesos CMOS.",
+        label: "Interfaz estable con metales estándar",
+        tone: "electrodes"
+      },
+      beol: {
+        title: "Integración BEOL",
+        copy: "Enfoque orientado a integración posterior al transistor, permitiendo una ruta potencial hacia memoria no volátil de alta densidad.",
+        label: "Ruta de integración posterior al transistor",
+        tone: "beol"
+      }
+    };
+
+    const industryButtons = document.querySelectorAll(".industry");
+    const panelImage = document.getElementById("panel-image");
+    const panelImageLabel = document.getElementById("panel-image-label");
+    const panelTitle = document.getElementById("panel-title");
+    const panelCopy = document.getElementById("panel-copy");
+
+    (() => {
+      const toggle = document.getElementById("navToggle");
+      const menu = document.getElementById("mobileMenu");
+      const backdrop = document.getElementById("mobileBackdrop");
+
+      if (!toggle || !menu || !backdrop) return;
+
+      function setOpen(open) {
+        toggle.setAttribute("aria-expanded", open ? "true" : "false");
+        menu.hidden = !open;
+        backdrop.hidden = !open;
+        document.body.classList.toggle("menu-open", open);
+      }
+
+      toggle.addEventListener("click", () => {
+        setOpen(menu.hidden);
+      });
+
+      backdrop.addEventListener("click", () => {
+        setOpen(false);
+      });
+
+      menu.addEventListener("click", (event) => {
+        const link = event.target.closest("a");
+        if (!link) return;
+        setOpen(false);
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") setOpen(false);
+      });
+
+      window.addEventListener("resize", () => {
+        if (window.innerWidth > 620) setOpen(false);
+      });
+    })();
+
+    industryButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const panelKey = button.dataset.panel;
+        const panelData = manufacturePanels[panelKey];
+
+        if (!panelData) {
+          return;
+        }
+
+        industryButtons.forEach((item) => {
+          item.classList.toggle("active", item === button);
+          item.setAttribute("aria-pressed", item === button ? "true" : "false");
+        });
+
+        panelImage.dataset.tone = panelData.tone;
+        panelImageLabel.textContent = panelData.label;
+        panelTitle.textContent = panelData.title;
+        panelCopy.textContent = panelData.copy;
+      });
+    });
+
+    (() => {
+      const form = document.getElementById("contact-form");
+      const status = document.getElementById("contact-status");
+      const sectorField = document.getElementById("contact-sector");
+      const interestField = document.getElementById("contact-interest");
+      const interestLinks = document.querySelectorAll(".js-contact-interest");
+
+      if (!form || !sectorField || !interestField) return;
+
+      const subjects = {
+        whitepaper: "Solicitud de whitepaper - RTN-Null Cell",
+        nda: "Solicitud de NDA - RTN-Null Cell",
+        validacion: "Validacion tecnica ReRAM - RTN-Null Cell",
+        licenciamiento: "Explorar estructura comercial - RTN-Null Cell",
+        tecnica: "Conversacion tecnica - RTN-Null Cell",
+        otro: "Consulta tecnica - RTN-Null Cell"
+      };
+
+      function setInterest(value) {
+        if (!value) return;
+        interestField.value = value;
+      }
+
+      const params = new URLSearchParams(window.location.search);
+      const initialInterest = params.get("interest");
+
+      if (initialInterest) {
+        setInterest(initialInterest);
+      }
+
+      interestLinks.forEach((link) => {
+        link.addEventListener("click", () => {
+          setInterest(link.dataset.interest);
+        });
+      });
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const formData = new FormData(form);
+        const selectedSector = sectorField.options[sectorField.selectedIndex];
+        const sectorLabel = selectedSector ? selectedSector.text : "";
+        const selectedOption = interestField.options[interestField.selectedIndex];
+        const interestLabel = selectedOption ? selectedOption.text : "";
+        const interestValue = formData.get("interest");
+        const subject = subjects[interestValue] || "Consulta tecnica - RTN-Null Cell";
+        const body = [
+          "Nombre: " + (formData.get("name") || ""),
+          "Empresa o institucion: " + (formData.get("company") || ""),
+          "Email: " + (formData.get("email") || ""),
+          "Telefono: " + (formData.get("phone") || ""),
+          "Sector: " + sectorLabel,
+          "Interes: " + interestLabel,
+          "Privacidad: Aceptada",
+          "",
+          "Mensaje:",
+          formData.get("message") || ""
+        ].join("\n");
+
+        if (status) {
+          status.textContent = "Abriendo tu cliente de correo...";
+        }
+
+        window.location.href =
+          "mailto:info@teract.com?subject=" +
+          encodeURIComponent(subject) +
+          "&body=" +
+          encodeURIComponent(body);
+      });
+    })();
+
+    (() => {
+      function initLang(switcherId, toggleId, menuId) {
+        const switcher = document.getElementById(switcherId);
+        const toggle = document.getElementById(toggleId);
+        const menu = document.getElementById(menuId);
+
+        if (!switcher || !toggle || !menu) return;
+
+        function close() {
+          menu.hidden = true;
+          switcher.classList.remove("open");
+          toggle.setAttribute("aria-expanded", "false");
+        }
+
+        function open() {
+          menu.hidden = false;
+          switcher.classList.add("open");
+          toggle.setAttribute("aria-expanded", "true");
+        }
+
+        toggle.addEventListener("click", (event) => {
+          event.stopPropagation();
+          if (menu.hidden) open();
+          else close();
+        });
+
+        document.addEventListener("click", (event) => {
+          if (!switcher.contains(event.target)) close();
+        });
+
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape") close();
+        });
+      }
+
+      initLang("langSwitcher", "langToggle", "langMenu");
+      initLang("langSwitcherMobile", "langToggleMobile", "langMenuMobile");
+    })();
+  </script>
+
+</body>
+</html>

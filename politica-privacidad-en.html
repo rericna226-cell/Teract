@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Notice | TERACT Semiconductors</title>
+  <meta
+    name="description"
+    content="Comprehensive Privacy Notice of TERACT Semiconductors, in accordance with the Mexican Federal Law on Protection of Personal Data Held by Private Parties."
+  />
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --surface: #ffffff;
+      --surface-dark: #101926;
+      --text: #0c1422;
+      --muted: #4e5d70;
+      --soft: #ebf2f8;
+      --accent: #38d5e8;
+      --border: rgba(12, 20, 34, 0.1);
+      --max: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.58;
+    }
+
+    body.menu-open {
+      overflow: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(var(--max), calc(100% - 48px));
+      margin: 0 auto;
+    }
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+      padding: 28px 6%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      background: rgba(8, 11, 16, 0.22);
+      backdrop-filter: blur(10px);
+      color: #fff;
+    }
+
+    .lang-switcher {
+      position: relative;
+      margin-left: 18px;
+    }
+
+    .lang-switcher.mobile-header {
+      display: none;
+      margin-left: 12px;
+    }
+
+    .lang {
+      appearance: none;
+      height: 42px;
+      padding: 0 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+    }
+
+    .lang-caret {
+      color: rgba(255,255,255,0.68);
+      font-size: 12px;
+      transition: transform 0.15s ease;
+    }
+
+    .lang-switcher.open .lang-caret {
+      transform: rotate(180deg);
+    }
+
+    .lang-menu {
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 0;
+      min-width: 180px;
+      padding: 8px;
+      border-radius: 18px;
+      border: 1px solid rgba(12, 20, 34, 0.12);
+      background: rgba(255,255,255,0.98);
+      box-shadow: 0 24px 80px rgba(0,0,0,0.18);
+      display: grid;
+      gap: 6px;
+      z-index: 110;
+    }
+
+    .lang-menu a {
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      border-radius: 14px;
+      color: #0c1422;
+      font-size: 14px;
+      font-weight: 700;
+      border: 1px solid transparent;
+      background: transparent;
+    }
+
+    .lang-menu a:hover,
+    .lang-menu a.active {
+      background: rgba(12, 20, 34, 0.04);
+      border-color: rgba(12, 20, 34, 0.06);
+    }
+
+    .nav-toggle {
+      display: none;
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.1);
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      flex-direction: column;
+      padding: 0;
+      cursor: pointer;
+    }
+
+    .nav-toggle span {
+      width: 20px;
+      height: 2px;
+      background: rgba(255,255,255,0.92);
+      border-radius: 999px;
+      display: block;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 46px;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .nav-links a {
+      transition: color 0.25s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--accent);
+    }
+
+    .navbar.scrolled {
+      background: rgba(17, 24, 33, 0.96);
+      color: #f5f7fa;
+      border-bottom: 1px solid rgba(56, 213, 232, 0.14);
+    }
+
+    .navbar.scrolled .nav-links a:hover,
+    .navbar.scrolled .nav-links a.active {
+      color: var(--accent);
+    }
+
+    .navbar.scrolled .lang {
+      border-color: rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.08);
+      color: #f5f7fa;
+    }
+
+    .navbar.scrolled .nav-toggle {
+      border-color: rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.08);
+    }
+
+    .legal-hero {
+      padding: 146px 0 68px;
+      background:
+        radial-gradient(circle at 18% 20%, rgba(56, 213, 232, 0.16), transparent 24%),
+        linear-gradient(135deg, #0c1422, #132030 58%, #1a3047);
+      color: #fff;
+    }
+
+    .eyebrow {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: rgba(255,255,255,0.72);
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
+
+    h1,
+    h2,
+    h3 {
+      letter-spacing: -0.045em;
+    }
+
+    h1 {
+      font-size: clamp(40px, 5vw, 68px);
+      line-height: 1.02;
+      margin-bottom: 18px;
+    }
+
+    h2 {
+      font-size: clamp(30px, 3vw, 42px);
+      line-height: 1.08;
+      margin-bottom: 20px;
+    }
+
+    h3 {
+      font-size: 24px;
+      line-height: 1.15;
+      margin-bottom: 14px;
+    }
+
+    .section-lead {
+      max-width: 760px;
+      font-size: 20px;
+      color: rgba(255,255,255,0.84);
+    }
+
+    .updated {
+      margin-top: 18px;
+      font-size: 14px;
+      color: rgba(255,255,255,0.68);
+    }
+
+    .legal-body {
+      padding: 82px 0 96px;
+    }
+
+    .legal-grid {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      gap: 28px;
+      align-items: start;
+    }
+
+    .legal-toc {
+      position: sticky;
+      top: 110px;
+      display: grid;
+      gap: 8px;
+      padding: 22px;
+      border-radius: 24px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.05);
+    }
+
+    .legal-toc a {
+      padding: 10px 12px;
+      border-radius: 14px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .legal-toc a:hover {
+      background: var(--soft);
+      color: var(--text);
+    }
+
+    .legal-content {
+      display: grid;
+      gap: 0;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 10px 28px;
+      box-shadow: 0 18px 50px rgba(0,0,0,0.05);
+    }
+
+    .legal-content section {
+      padding: 28px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .legal-content section:last-child {
+      border-bottom: 0;
+    }
+
+    .legal-content p,
+    .legal-content li {
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .legal-content p + p,
+    .legal-content p + ul,
+    .legal-content ul + p,
+    .legal-content h3 + p,
+    .legal-content h3 + ul {
+      margin-top: 12px;
+    }
+
+    .legal-content ul {
+      padding-left: 22px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .num {
+      color: var(--accent);
+      margin-right: 8px;
+    }
+
+    .legal-card {
+      margin-top: 18px;
+      padding: 22px;
+      border-radius: 22px;
+      background: var(--soft);
+      border: 1px solid var(--border);
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 12px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 24px;
+      border-radius: 999px;
+      font-size: 15px;
+      font-weight: 800;
+      transition: 0.2s ease;
+      cursor: pointer;
+      white-space: nowrap;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: var(--surface-dark);
+      color: #fff;
+      border-color: var(--surface-dark);
+    }
+
+    .btn-primary:hover {
+      background: #14283d;
+      border-color: #14283d;
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      border-color: rgba(12,20,34,0.14);
+    }
+
+    .btn-secondary:hover {
+      background: var(--surface-dark);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    footer {
+      padding: 0 0 52px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      border-top: 1px solid var(--border);
+      padding-top: 28px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+    }
+
+    .footer-links a:hover {
+      color: var(--text);
+    }
+
+    .footer-contact {
+      text-align: right;
+    }
+
+    .mobile-backdrop[hidden],
+    .mobile-menu[hidden],
+    .lang-menu[hidden] {
+      display: none;
+    }
+
+    .mobile-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.24);
+      backdrop-filter: blur(2px);
+      z-index: 90;
+    }
+
+    .mobile-menu {
+      position: fixed;
+      top: 86px;
+      left: 14px;
+      right: 14px;
+      background: rgba(255,255,255,0.98);
+      border: 1px solid rgba(12,20,34,0.12);
+      border-radius: 18px;
+      box-shadow: 0 28px 90px rgba(0,0,0,0.18);
+      padding: 12px;
+      display: grid;
+      gap: 8px;
+      z-index: 95;
+    }
+
+    .mobile-menu a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px;
+      border-radius: 14px;
+      font-weight: 700;
+      font-size: 15px;
+      color: #0c1422;
+      background: rgba(12,20,34,0.03);
+      border: 1px solid rgba(12,20,34,0.06);
+    }
+
+    .mobile-menu a:hover,
+    .mobile-menu a.active {
+      background: rgba(12,20,34,0.06);
+    }
+
+    @media (max-width: 980px) {
+      .legal-grid,
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .legal-toc {
+        position: static;
+      }
+
+      .footer-contact {
+        text-align: left;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .navbar {
+        padding: 20px 5%;
+        gap: 10px;
+      }
+
+      .nav-links,
+      .navbar > .lang-switcher:not(.mobile-header) {
+        display: none;
+      }
+
+      .lang-switcher.mobile-header {
+        display: block;
+      }
+
+      .lang-switcher.mobile-header .lang {
+        border-radius: 12px;
+      }
+
+      .nav-toggle {
+        display: inline-flex;
+      }
+
+      .legal-content section,
+      .legal-toc {
+        padding: 22px;
+      }
+
+      .legal-content {
+        padding: 6px 22px;
+      }
+
+      .legal-content section {
+        padding: 22px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar" id="navbar">
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="index-en.html">Home</a>
+      <a href="rtn-null-cell-en.html">RTN-Null Cell</a>
+      <a href="hypergate-en.html">HyperGate</a>
+      <a href="politica-privacidad-en.html" class="active">Privacy</a>
+    </nav>
+    <div class="lang-switcher" id="langSwitcher">
+      <button class="lang" type="button" aria-label="Select language" aria-haspopup="true" aria-expanded="false" aria-controls="langMenu" id="langToggle">
+        <span>EN</span>
+        <span class="lang-caret" aria-hidden="true">⌄</span>
+      </button>
+      <div class="lang-menu" id="langMenu" hidden>
+        <a href="politica-privacidad.html">
+          <span>Español</span>
+        </a>
+        <a href="politica-privacidad-en.html" class="active">
+          <span>English</span>
+        </a>
+      </div>
+    </div>
+    <div class="lang-switcher mobile-header" id="langSwitcherMobile">
+      <button class="lang" type="button" aria-label="Select language" aria-haspopup="true" aria-expanded="false" aria-controls="langMenuMobile" id="langToggleMobile">
+        <span>EN</span>
+        <span class="lang-caret" aria-hidden="true">⌄</span>
+      </button>
+      <div class="lang-menu" id="langMenuMobile" hidden>
+        <a href="politica-privacidad.html">
+          <span>Español</span>
+        </a>
+        <a href="politica-privacidad-en.html" class="active">
+          <span>English</span>
+        </a>
+      </div>
+    </div>
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="Open menu" aria-controls="mobileMenu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <div class="mobile-backdrop" id="mobileBackdrop" hidden></div>
+  <div class="mobile-menu" id="mobileMenu" hidden>
+    <a href="index-en.html">Home</a>
+    <a href="rtn-null-cell-en.html">RTN-Null Cell</a>
+    <a href="hypergate-en.html">HyperGate</a>
+    <a href="politica-privacidad-en.html" class="active">Privacy</a>
+  </div>
+
+  <main>
+    <section class="legal-hero">
+      <div class="container">
+        <div class="eyebrow">Legal document</div>
+        <h1>Comprehensive Privacy Notice</h1>
+        <p class="section-lead">
+          This Privacy Notice is issued in accordance with the Mexican Federal Law on Protection of Personal Data Held by Private Parties.
+        </p>
+        <p class="updated">Last updated: 30/06/2026</p>
+      </div>
+    </section>
+
+    <section class="legal-body">
+      <div class="container legal-grid">
+        <nav class="legal-toc" aria-label="Privacy notice index">
+          <a href="#controller">1. Data controller</a>
+          <a href="#data">2. Personal data collected</a>
+          <a href="#purposes">3. Processing purposes</a>
+          <a href="#consent">4. Consent</a>
+          <a href="#transfers">5. Data transfers</a>
+          <a href="#rights">6. ARCO rights</a>
+          <a href="#limitation">7. Limiting use or disclosure</a>
+          <a href="#cookies">8. Cookies and tracking</a>
+          <a href="#changes">9. Changes to this notice</a>
+          <a href="#authority">10. Data protection authority</a>
+        </nav>
+
+        <div class="legal-content">
+          <section id="controller">
+            <h2><span class="num">1.</span>Identity and address of the data controller</h2>
+            <p>
+              The controller of your personal data is
+              Iván Erick Tlatecatl Morales,
+              with address
+              C. 2 Sur 308, La Santísima Trinidad, 72810 San Andrés Cholula, Pue.,
+              and contact email
+              <a href="mailto:info@teract.com">info@teract.com</a>
+              (the "Controller").
+            </p>
+            <p>
+              The Controller is responsible for collecting, using, and protecting the personal data you provide
+              through this website, in accordance with the principles of lawfulness, consent, information, quality,
+              purpose limitation, loyalty, proportionality, and accountability established by applicable law.
+            </p>
+          </section>
+
+          <section id="data">
+            <h2><span class="num">2.</span>Personal data we collect</h2>
+            <p>
+              Through this site's contact form, we collect directly and by electronic means only the following
+              personal data:
+            </p>
+            <ul>
+              <li>Full name.</li>
+              <li>Company or organization.</li>
+              <li>Email address.</li>
+              <li>Any information you voluntarily include in the message field, as well as the selected interest type (NDA, licensing, acquisition, integration, or technical conversation).</li>
+            </ul>
+            <p>
+              We do not collect sensitive personal data, nor financial or asset-related data, through this site.
+            </p>
+          </section>
+
+          <section id="purposes">
+            <h2><span class="num">3.</span>Purposes of processing</h2>
+            <h3>Primary purposes (necessary)</h3>
+            <p>Your data is used for the following purposes that give rise to and are necessary for our relationship with you:</p>
+            <ul>
+              <li>To handle, follow up on, and respond to your request for information, NDA, licensing, acquisition, or integration.</li>
+              <li>To contact you by electronic or telephone means to coordinate technical conversations, due diligence, or IP transfer discussions.</li>
+              <li>To identify and qualify the requester as a potential counterparty or partner.</li>
+              <li>To comply with obligations arising from the relationship that may be established.</li>
+            </ul>
+            <h3>Secondary purposes (optional)</h3>
+            <p>
+              We currently do not use your personal data for secondary purposes, such as sending
+              institutional updates, newsletters, or promotional communications. If this changes
+              in the future, this notice will be updated accordingly. This does not affect the
+              primary purposes necessary to respond to your request.
+            </p>
+          </section>
+
+          <section id="consent">
+            <h2><span class="num">4.</span>Consent</h2>
+            <p>
+              By providing your personal data through this site's form and sending your request, you acknowledge
+              that you have read this Privacy Notice and give your consent for the processing of your data in
+              accordance with the purposes described herein. Consent may be revoked at any time as described in
+              section 6.
+            </p>
+          </section>
+
+          <section id="transfers">
+            <h2><span class="num">5.</span>Transfers of personal data</h2>
+            <p>
+              The Controller will not transfer your personal data to third parties without your consent, except in
+              the cases provided by law (for example, when a transfer is required by law, necessary for the
+              administration of justice, or carried out within the same corporate group under common policies).
+            </p>
+            <p>
+              If the Controller needs to transfer data to third parties outside the cases above (for example
+              legal counsel or specialized service providers strictly necessary to process your
+              request), you will be informed and, when required by law, your consent will be obtained.
+            </p>
+          </section>
+
+          <section id="rights">
+            <h2><span class="num">6.</span>Means to exercise ARCO rights and revoke consent</h2>
+            <p>
+              You have the right to know what personal data we hold, what we use it for, and the conditions of its
+              use (Access); to request correction when it is inaccurate or incomplete (Rectification); to request
+              deletion from our records when you consider it is not being used in accordance with the law
+              (Cancellation); and to object to the use of your data for specific purposes (Opposition). These are
+              known as ARCO rights.
+            </p>
+            <p>
+              To exercise any of these rights, or to revoke your consent, send a request to
+              <a href="mailto:info@teract.com">info@teract.com</a> indicating:
+            </p>
+            <ul>
+              <li>Name of the data subject and a means to communicate the response.</li>
+              <li>Document proving identity (or legal representation, if applicable).</li>
+              <li>Clear and precise description of the right you wish to exercise or the specific request.</li>
+              <li>Any element that helps locate the personal data.</li>
+            </ul>
+            <p>
+              The Controller will respond within the timeframes established by applicable law.
+            </p>
+          </section>
+
+          <section id="limitation">
+            <h2><span class="num">7.</span>Means to limit the use or disclosure of your data</h2>
+            <p>
+              You may request that we limit the use or disclosure of your personal data by sending your request to
+              <a href="mailto:info@teract.com">info@teract.com</a>. Additionally, any communication you receive from us
+              will include a mechanism to request that you stop receiving it.
+            </p>
+          </section>
+
+          <section id="cookies">
+            <h2><span class="num">8.</span>Use of cookies and tracking technologies</h2>
+            <p>
+              This site does not use cookies or tracking technologies that automatically collect personal data.
+            </p>
+          </section>
+
+          <section id="changes">
+            <h2><span class="num">9.</span>Changes to this Privacy Notice</h2>
+            <p>
+              This Privacy Notice may be modified due to legal changes, internal practices, or new requirements.
+              Any change will be published on this page, indicating the date of the latest update. We recommend
+              reviewing it periodically.
+            </p>
+          </section>
+
+          <section id="authority">
+            <h2><span class="num">10.</span>Data protection authority</h2>
+            <p>
+              If you believe your right to personal data protection has been violated, you may contact the competent authority in Mexico regarding personal data protection held by private parties.
+            </p>
+            <div class="legal-card">
+              <h3>Questions about this notice?</h3>
+              <p>
+                For any inquiry related to the processing of your personal data, email us at
+                <a href="mailto:info@teract.com">info@teract.com</a>.
+              </p>
+            </div>
+            <div class="actions">
+              <a class="btn btn-primary" href="index-en.html">Back to TERACT</a>
+              <a class="btn btn-secondary" href="index-en.html#contacto">Go to contact form</a>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+      <div class="footer-links">
+        <a href="index-en.html">Home</a>
+        <a href="rtn-null-cell-en.html">RTN-Null Cell</a>
+        <a href="hypergate-en.html">HyperGate</a>
+        <a href="index-en.html#contacto">Contact</a>
+        <a href="politica-privacidad-en.html">Privacy</a>
+      </div>
+
+      <div class="footer-contact">
+        <p>TERACT Semiconductors</p>
+        <p>Puebla, Mexico</p>
+        <p>© 2026 TERACT Semiconductors. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const navbar = document.getElementById("navbar");
+
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 80) {
+        navbar.classList.add("scrolled");
+      } else {
+        navbar.classList.remove("scrolled");
+      }
+    });
+
+    (() => {
+      const toggle = document.getElementById("navToggle");
+      const menu = document.getElementById("mobileMenu");
+      const backdrop = document.getElementById("mobileBackdrop");
+
+      if (!toggle || !menu || !backdrop) return;
+
+      function setOpen(open) {
+        toggle.setAttribute("aria-expanded", open ? "true" : "false");
+        menu.hidden = !open;
+        backdrop.hidden = !open;
+        document.body.classList.toggle("menu-open", open);
+      }
+
+      toggle.addEventListener("click", () => {
+        setOpen(menu.hidden);
+      });
+
+      backdrop.addEventListener("click", () => {
+        setOpen(false);
+      });
+
+      menu.addEventListener("click", (event) => {
+        const link = event.target.closest("a");
+        if (!link) return;
+        setOpen(false);
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") setOpen(false);
+      });
+
+      window.addEventListener("resize", () => {
+        if (window.innerWidth > 700) setOpen(false);
+      });
+    })();
+
+    (() => {
+      function initLang(switcherId, toggleId, menuId) {
+        const switcher = document.getElementById(switcherId);
+        const toggle = document.getElementById(toggleId);
+        const menu = document.getElementById(menuId);
+
+        if (!switcher || !toggle || !menu) return;
+
+        function close() {
+          menu.hidden = true;
+          switcher.classList.remove("open");
+          toggle.setAttribute("aria-expanded", "false");
+        }
+
+        function open() {
+          menu.hidden = false;
+          switcher.classList.add("open");
+          toggle.setAttribute("aria-expanded", "true");
+        }
+
+        toggle.addEventListener("click", (event) => {
+          event.stopPropagation();
+          if (menu.hidden) open();
+          else close();
+        });
+
+        document.addEventListener("click", (event) => {
+          if (!switcher.contains(event.target)) close();
+        });
+
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape") close();
+        });
+      }
+
+      initLang("langSwitcher", "langToggle", "langMenu");
+      initLang("langSwitcherMobile", "langToggleMobile", "langMenuMobile");
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Detalle HyperGate V40 | TERACT</title>
+  <style>
+    :root {
+      --bg: #06101f;
+      --surface: #0d1b32;
+      --surface-soft: #f6faff;
+      --card: #fbfdff;
+      --text: #09101c;
+      --muted: #516177;
+      --light: #ffffff;
+      --accent: #2f7cff;
+      --cyan: #4be5ff;
+      --border: rgba(9,16,28,0.1);
+      --max-width: 1120px;
+    }
+    html { scrollbar-gutter: stable; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--surface-soft);
+      color: var(--text);
+      line-height: 1.65;
+    }
+    body.menu-open {
+      overflow: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+      padding: 24px 6%;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      background: rgba(6, 16, 31, 0.8);
+      backdrop-filter: blur(10px);
+      color: var(--light);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .nav-links {
+      display: flex;
+      gap: 34px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--cyan);
+    }
+    .lang-switcher {
+      position: relative;
+      margin-left: 18px;
+    }
+
+    .lang-switcher.mobile-header {
+      display: none;
+      margin-left: 12px;
+    }
+
+    .lang {
+      appearance: none;
+      height: 42px;
+      padding: 0 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.1);
+      color: inherit;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+    }
+
+    .lang-caret {
+      color: rgba(255,255,255,0.68);
+      font-size: 12px;
+      transition: transform 0.15s ease;
+    }
+
+    .lang-switcher.open .lang-caret {
+      transform: rotate(180deg);
+    }
+
+    .lang-menu {
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 0;
+      min-width: 180px;
+      padding: 8px;
+      border-radius: 18px;
+      border: 1px solid rgba(12,20,34,0.12);
+      background: rgba(255,255,255,0.98);
+      box-shadow: 0 24px 80px rgba(0,0,0,0.18);
+      display: grid;
+      gap: 6px;
+      z-index: 110;
+    }
+
+    .lang-menu a {
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      border-radius: 14px;
+      color: #0c1422;
+      font-size: 14px;
+      font-weight: 700;
+      border: 1px solid transparent;
+      background: transparent;
+    }
+
+    .lang-menu a:hover,
+    .lang-menu a.active {
+      background: rgba(12,20,34,0.04);
+      border-color: rgba(12,20,34,0.06);
+    }
+    .nav-toggle {
+      display: none;
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.08);
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      flex-direction: column;
+      padding: 0;
+      cursor: pointer;
+    }
+    .nav-toggle span {
+      width: 20px;
+      height: 2px;
+      background: rgba(255,255,255,0.92);
+      border-radius: 999px;
+      display: block;
+    }
+    .mobile-backdrop[hidden],
+    .mobile-menu[hidden],
+    .lang-menu[hidden] {
+      display: none;
+    }
+    .mobile-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.24);
+      backdrop-filter: blur(2px);
+      z-index: 90;
+    }
+    .mobile-menu {
+      position: fixed;
+      top: 82px;
+      left: 14px;
+      right: 14px;
+      background: rgba(13, 27, 50, 0.98);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 18px;
+      box-shadow: 0 28px 90px rgba(0,0,0,0.22);
+      padding: 12px;
+      display: grid;
+      gap: 8px;
+      z-index: 95;
+    }
+    .mobile-menu a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px;
+      border-radius: 14px;
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--light);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .mobile-menu a:hover,
+    .mobile-menu a.active {
+      color: var(--cyan);
+      background: rgba(255,255,255,0.08);
+    }
+    section { padding: 92px 6%; }
+    .container { max-width: var(--max-width); margin: 0 auto; }
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: 18px;
+    }
+    h1, h2 { line-height: 1.02; letter-spacing: -2px; }
+    h1 { font-size: clamp(40px, 6vw, 72px); margin-bottom: 20px; }
+    h2 { font-size: clamp(34px, 5vw, 52px); margin-bottom: 24px; }
+    p { font-size: 18px; color: var(--muted); }
+    .hero {
+      color: var(--light);
+      padding-top: 138px;
+      background:
+        radial-gradient(circle at 18% 22%, rgba(75, 229, 255, 0.16), transparent 24%),
+        linear-gradient(135deg, #081426, #0d1b32 58%, #144180);
+    }
+    .hero-grid {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 0.92fr;
+      gap: 34px;
+      align-items: end;
+    }
+    .hero p { color: rgba(255,255,255,0.84); max-width: 40ch; }
+    .hero-card {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 28px;
+      padding: 26px;
+      backdrop-filter: blur(8px);
+    }
+    .hero-card h3 {
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+    .hero-card ul {
+      padding-left: 20px;
+      display: grid;
+      gap: 8px;
+      color: rgba(255,255,255,0.82);
+    }
+    .stack, .kpis, .route {
+      background: var(--card);
+      border-top: 1px solid var(--border);
+    }
+    .stack-schema {
+      display: grid;
+      gap: 12px;
+      margin-top: 34px;
+    }
+    .stack-layer {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 18px;
+      padding: 22px 24px;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      background: #fff;
+    }
+    .stack-layer strong {
+      font-size: 18px;
+      color: var(--text);
+    }
+    .stack-layer span {
+      color: var(--cyan);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 4px;
+    }
+    .disclaimer {
+      margin-top: 18px;
+      padding: 18px 20px;
+      border-left: 4px solid var(--accent);
+      background: #eef6ff;
+      border-radius: 0 18px 18px 0;
+      font-size: 16px;
+    }
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+      margin-top: 34px;
+    }
+    .kpi-card, .route-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 26px;
+    }
+    .kpi-card h3, .route-card h3 {
+      font-size: 24px;
+      margin-bottom: 12px;
+    }
+    .kpi-card small {
+      display: block;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .route-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+      margin-top: 34px;
+    }
+    .cta {
+      background: linear-gradient(180deg, #11284d, var(--bg));
+      color: var(--light);
+    }
+    .cta-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .cta p { color: rgba(255,255,255,0.82); max-width: 42ch; }
+    .actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 24px;
+      border-radius: 999px;
+      font-weight: 700;
+      border: 1px solid transparent;
+    }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-outline { border-color: rgba(255,255,255,0.4); color: #fff; }
+    footer {
+      padding: 32px 6% 56px;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      color: #65768d;
+      font-size: 14px;
+    }
+    @media (max-width: 900px) {
+      .navbar {
+        justify-content: flex-end;
+        gap: 10px;
+        padding: 20px 5%;
+      }
+      .nav-links,
+      .navbar > .lang-switcher:not(.mobile-header) {
+        display: none;
+      }
+      .lang-switcher.mobile-header {
+        display: block;
+      }
+      .lang-switcher.mobile-header .lang {
+        border-radius: 12px;
+      }
+      .nav-toggle {
+        display: inline-flex;
+      }
+      .hero-grid, .route-grid, .kpi-grid {
+        grid-template-columns: 1fr;
+      }
+      .stack-layer {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <nav class="nav-links">
+      <a href="index.html">Inicio</a>
+      <a href="rtn-null-cell.html">RTN-Null Cell</a>
+      <a href="hypergate.html" class="active">HyperGate</a>
+      <a href="hypergate.html#contacto">Contáctanos</a>
+    </nav>
+    <div class="lang-switcher" id="langSwitcher">
+      <button class="lang" type="button" aria-label="Seleccionar idioma" aria-haspopup="true" aria-expanded="false" aria-controls="langMenu" id="langToggle">
+        <span>ES</span>
+        <span class="lang-caret" aria-hidden="true">⌄</span>
+      </button>
+      <div class="lang-menu" id="langMenu" hidden>
+        <a href="hypergate-detalle.html" class="active">
+          <span>Español</span>
+        </a>
+        <a href="hypergate-detalle-en.html">
+          <span>English</span>
+        </a>
+      </div>
+    </div>
+    <div class="lang-switcher mobile-header" id="langSwitcherMobile">
+      <button class="lang" type="button" aria-label="Seleccionar idioma" aria-haspopup="true" aria-expanded="false" aria-controls="langMenuMobile" id="langToggleMobile">
+        <span>ES</span>
+        <span class="lang-caret" aria-hidden="true">⌄</span>
+      </button>
+      <div class="lang-menu" id="langMenuMobile" hidden>
+        <a href="hypergate-detalle.html" class="active">
+          <span>Español</span>
+        </a>
+        <a href="hypergate-detalle-en.html">
+          <span>English</span>
+        </a>
+      </div>
+    </div>
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="Abrir menú" aria-controls="mobileMenu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <div class="mobile-backdrop" id="mobileBackdrop" hidden></div>
+  <div class="mobile-menu" id="mobileMenu" hidden>
+    <a href="index.html">Inicio</a>
+    <a href="rtn-null-cell.html">RTN-Null Cell</a>
+    <a href="hypergate.html" class="active">HyperGate</a>
+    <a href="hypergate.html#contacto">Contáctanos</a>
+  </div>
+
+  <section class="hero">
+    <div class="hero-grid">
+      <div>
+        <p class="eyebrow">TERACT · HyperGate V40</p>
+        <h1>Detalle ampliado de arquitectura y validación</h1>
+        <p>
+          Vista de producto para evaluación preliminar. Resume el esquema funcional del gate stack, métricas esperadas y la ruta experimental propuesta sin divulgar espesores exactos, geometrías reservadas ni valores confidenciales.
+        </p>
+      </div>
+      <div class="hero-card">
+        <h3>Principio de diseño</h3>
+        <ul>
+          <li>Control de interfaz para contener fuga de compuerta.</li>
+          <li>Integración con materiales estándar de transistor avanzado.</li>
+          <li>Ruta pensada para nodos sub-2nm y era Ángstrom.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="stack">
+    <div class="container">
+      <p class="eyebrow">Esquema del stack</p>
+      <h2>Arquitectura funcional de compuerta</h2>
+      <p>El enfoque separa funciones de interfaz, aislamiento y acoplamiento electrostático para mejorar el equilibrio entre leakage y control de canal.</p>
+
+      <div class="stack-schema">
+        <div class="stack-layer">
+          <div>
+            <span>Región superior</span>
+            <strong>Electrodo / gate conductor</strong>
+          </div>
+          <p>Elemento conductor integrado con una pila de compuerta compatible con flujo avanzado de manufactura.</p>
+        </div>
+        <div class="stack-layer">
+          <div>
+            <span>Región dieléctrica</span>
+            <strong>Capa high-k de soporte</strong>
+          </div>
+          <p>Dieléctrico orientado a preservar capacitancia efectiva sin empujar el sistema a una penalización de fuga excesiva.</p>
+        </div>
+        <div class="stack-layer">
+          <div>
+            <span>Interfaz crítica</span>
+            <strong>Capa interfacial calibrada</strong>
+          </div>
+          <p>Región diseñada para modular el compromiso entre control electrostático, estabilidad interfacial y comportamiento por túnel.</p>
+        </div>
+        <div class="stack-layer">
+          <div>
+            <span>Región activa</span>
+            <strong>Canal GAA-FET</strong>
+          </div>
+          <p>Entorno transistor donde la calidad interfacial y el stack de compuerta determinan la respuesta eléctrica global.</p>
+        </div>
+      </div>
+
+      <div class="disclaimer">
+        Este esquema muestra funciones de arquitectura, no recetas cerradas. Dimensiones críticas, ventanas de proceso y parámetros exactos se reservan para revisión controlada.
+      </div>
+    </div>
+  </section>
+
+  <section class="kpis">
+    <div class="container">
+      <p class="eyebrow">KPIs esperados</p>
+      <h2>Métricas objetivo, sujetas a validación</h2>
+      <p>Los siguientes indicadores representan metas técnicas esperadas y deben verificarse mediante test wafer, C-V/I-V y comparación contra estructuras de referencia.</p>
+
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <small>A validar</small>
+          <h3>Leakage reducido</h3>
+          <p>Menor fuga de compuerta en condiciones relevantes para nodos avanzados.</p>
+        </div>
+        <div class="kpi-card">
+          <small>A validar</small>
+          <h3>Control electrostático</h3>
+          <p>Capacitancia efectiva y comportamiento interfacial más robustos frente al escalamiento.</p>
+        </div>
+        <div class="kpi-card">
+          <small>A validar</small>
+          <h3>Eficiencia energética</h3>
+          <p>Mejor equilibrio entre desempeño, consumo en reposo y presupuesto térmico.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="route">
+    <div class="container">
+      <p class="eyebrow">Ruta experimental ampliada</p>
+      <h2>Secuencia de evaluación propuesta</h2>
+      <p>La validación ampliada se plantea como una ruta por etapas para separar efecto de arquitectura, variación de proceso y comportamiento eléctrico real.</p>
+
+      <div class="route-grid">
+        <div class="route-card">
+          <h3>1. Test wafer inicial</h3>
+          <p>Fabricación de estructuras experimentales y lotes de referencia sobre una ventana de proceso controlada.</p>
+        </div>
+        <div class="route-card">
+          <h3>2. Barridos C-V</h3>
+          <p>Caracterización de capacitancia efectiva, respuesta electrostática e interfaz gate / dieléctrico / canal.</p>
+        </div>
+        <div class="route-card">
+          <h3>3. Barridos I-V</h3>
+          <p>Medición de corriente de fuga, respuesta en reposo y comportamiento eléctrico bajo sesgos de operación.</p>
+        </div>
+        <div class="route-card">
+          <h3>4. Benchmark contra control</h3>
+          <p>Comparación estadística frente a stacks tradicionales para evaluar mejora, dispersión y robustez.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="cta-inner">
+      <div>
+        <p class="eyebrow">Siguiente paso</p>
+        <h2>Solicita whitepaper o conversación técnica</h2>
+        <p>La discusión de parámetros reservados, integración con foundry o revisión más profunda se canaliza mediante solicitud directa y, cuando aplique, bajo NDA.</p>
+      </div>
+      <div class="actions">
+        <a class="btn btn-primary" href="hypergate.html?interest=whitepaper#contacto">Solicitar whitepaper</a>
+        <a class="btn btn-outline" href="hypergate.html">Volver a HyperGate V40</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p><a href="politica-privacidad.html">Política de Privacidad</a> · © 2026 TERACT Semiconductores. Todos los derechos reservados.</p>
+  </footer>
+  <script>
+    (() => {
+      const toggle = document.getElementById("navToggle");
+      const menu = document.getElementById("mobileMenu");
+      const backdrop = document.getElementById("mobileBackdrop");
+
+      if (!toggle || !menu || !backdrop) return;
+
+      function setOpen(open) {
+        toggle.setAttribute("aria-expanded", open ? "true" : "false");
+        menu.hidden = !open;
+        backdrop.hidden = !open;
+        document.body.classList.toggle("menu-open", open);
+      }
+
+      toggle.addEventListener("click", () => {
+        setOpen(menu.hidden);
+      });
+
+      backdrop.addEventListener("click", () => {
+        setOpen(false);
+      });
+
+      menu.addEventListener("click", (event) => {
+        const link = event.target.closest("a");
+        if (!link) return;
+        setOpen(false);
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") setOpen(false);
+      });
+
+      window.addEventListener("resize", () => {
+        if (window.innerWidth > 900) setOpen(false);
+      });
+    })();
+
+    (() => {
+      function initLang(switcherId, toggleId, menuId) {
+        const switcher = document.getElementById(switcherId);
+        const toggle = document.getElementById(toggleId);
+        const menu = document.getElementById(menuId);
+
+        if (!switcher || !toggle || !menu) return;
+
+        function close() {
+          menu.hidden = true;
+          switcher.classList.remove("open");
+          toggle.setAttribute("aria-expanded", "false");
+        }
+
+        function open() {
+          menu.hidden = false;
+          switcher.classList.add("open");
+          toggle.setAttribute("aria-expanded", "true");
+        }
+
+        toggle.addEventListener("click", (event) => {
+          event.stopPropagation();
+          if (menu.hidden) open();
+          else close();
+        });
+
+        document.addEventListener("click", (event) => {
+          if (!switcher.contains(event.target)) close();
+        });
+
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape") close();
+        });
+      }
+
+      initLang("langSwitcher", "langToggle", "langMenu");
+      initLang("langSwitcherMobile", "langToggleMobile", "langMenuMobile");
+    })();
+  </script>
+</body>
+</html>

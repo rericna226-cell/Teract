@@ -1,0 +1,1578 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TERACT Semiconductores</title>
+
+  <style>
+    :root {
+      --brand-bg: #080B10;
+      --brand-surface: #111821;
+      --brand-text: #F5F7FA;
+      --brand-muted: #AEB7C2;
+      --brand-accent: #38D5E8;
+      --brand-warm: #FF6A1A;
+
+      --bg-dark: var(--brand-bg);
+      --bg-soft: #f3f7fb;
+      --text-dark: #080B10;
+      --text-light: #ffffff;
+      --text-muted: #4a5868;
+      --accent-orange: var(--brand-warm);
+      --accent-blue: var(--brand-accent);
+      --border: rgba(8, 11, 16, 0.14);
+      --max-width: 1280px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scrollbar-gutter: stable;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg-soft);
+      color: var(--text-dark);
+      line-height: 1.6;
+    }
+
+    body.menu-open {
+      overflow: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      width: 100%;
+      display: block;
+    }
+
+    /* NAVBAR */
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+      padding: 28px 6%;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      background: rgba(8, 11, 16, 0.22);
+      backdrop-filter: blur(10px);
+      color: white;
+    }
+
+    .navbar.scrolled {
+      background: rgba(17, 24, 33, 0.96);
+      color: var(--brand-text);
+      border-bottom: 1px solid rgba(56, 213, 232, 0.14);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 46px;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .nav-links a {
+      transition: color 0.25s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--accent-blue);
+    }
+
+    .lang-switcher {
+      position: relative;
+      margin-left: 18px;
+    }
+
+    .lang-switcher.mobile-header {
+      display: none;
+      margin-left: 12px;
+    }
+
+    .lang {
+      appearance: none;
+      height: 42px;
+      padding: 0 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.1);
+      color: inherit;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+    }
+
+    .lang-caret {
+      color: rgba(255,255,255,0.68);
+      font-size: 12px;
+      transition: transform 0.15s ease;
+    }
+
+    .lang-switcher.open .lang-caret {
+      transform: rotate(180deg);
+    }
+
+    .lang-menu {
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 0;
+      min-width: 180px;
+      padding: 8px;
+      border-radius: 18px;
+      border: 1px solid rgba(12,20,34,0.12);
+      background: rgba(255,255,255,0.98);
+      box-shadow: 0 24px 80px rgba(0,0,0,0.18);
+      display: grid;
+      gap: 6px;
+      z-index: 110;
+    }
+
+    .lang-menu a {
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      border-radius: 14px;
+      color: #0c1422;
+      font-size: 14px;
+      font-weight: 700;
+      border: 1px solid transparent;
+      background: transparent;
+    }
+
+    .lang-menu a:hover,
+    .lang-menu a.active {
+      background: rgba(12,20,34,0.04);
+      border-color: rgba(12,20,34,0.06);
+    }
+    .nav-toggle {
+      display: none;
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.1);
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      flex-direction: column;
+      padding: 0;
+      cursor: pointer;
+    }
+
+    .nav-toggle span {
+      width: 20px;
+      height: 2px;
+      background: rgba(255,255,255,0.92);
+      border-radius: 999px;
+      display: block;
+    }
+
+    .mobile-backdrop[hidden],
+    .mobile-menu[hidden],
+    .lang-menu[hidden] {
+      display: none;
+    }
+
+    .mobile-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.24);
+      backdrop-filter: blur(2px);
+      z-index: 90;
+    }
+
+    .mobile-menu {
+      position: fixed;
+      top: 86px;
+      left: 14px;
+      right: 14px;
+      background: rgba(17, 24, 33, 0.98);
+      border: 1px solid rgba(56, 213, 232, 0.12);
+      border-radius: 18px;
+      box-shadow: 0 28px 90px rgba(0,0,0,0.22);
+      padding: 12px;
+      display: grid;
+      gap: 8px;
+      z-index: 95;
+    }
+
+    .mobile-menu a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px;
+      border-radius: 14px;
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--brand-text);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(56, 213, 232, 0.08);
+    }
+
+    .mobile-menu a:hover,
+    .mobile-menu a.active {
+      color: var(--accent-blue);
+      background: rgba(255,255,255,0.08);
+    }
+
+    /* HERO */
+
+    .hero {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(56, 213, 232, 0.18), transparent 28%),
+        linear-gradient(135deg, #09111d 0%, #111821 52%, #0b1624 100%);
+      color: var(--text-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 140px 6% 80px;
+    }
+
+    .hero-content {
+      max-width: 980px;
+    }
+
+    .brand-mark {
+      margin-bottom: 46px;
+    }
+
+    .brand-icon {
+      font-size: 74px;
+      font-weight: 900;
+      letter-spacing: 6px;
+      line-height: 1;
+    }
+
+    .brand-name {
+      font-size: 74px;
+      font-weight: 800;
+      letter-spacing: 16px;
+      margin-top: 8px;
+    }
+
+    .brand-subtitle {
+      margin-top: 24px;
+      font-size: 14px;
+      letter-spacing: 10px;
+      color: rgba(255,255,255,0.78);
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      font-size: clamp(44px, 6vw, 82px);
+      line-height: 0.98;
+      letter-spacing: -3px;
+      margin-bottom: 30px;
+    }
+
+    .hero p {
+      max-width: 980px;
+      margin: 0 auto 38px;
+      font-size: clamp(18px, 2vw, 25px);
+      color: rgba(255,255,255,0.9);
+    }
+
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 15px 32px;
+      border-radius: 999px;
+      font-weight: 700;
+      border: 1px solid transparent;
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--accent-blue);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #23bfd1;
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      border-color: rgba(255,255,255,0.75);
+      color: white;
+    }
+
+    .btn-outline:hover {
+      background: white;
+      color: var(--text-dark);
+      transform: translateY(-2px);
+    }
+
+    .btn-dark {
+      background: var(--brand-surface);
+      color: white;
+    }
+
+    .btn-dark:hover {
+      background: var(--accent-blue);
+      transform: translateY(-2px);
+    }
+
+    /* GENERAL SECTIONS */
+
+    section {
+      padding: 110px 6%;
+    }
+
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      font-size: 14px;
+      font-weight: 800;
+      margin-bottom: 22px;
+    }
+
+    .section-title {
+      font-size: clamp(42px, 6vw, 78px);
+      line-height: 1;
+      letter-spacing: -3px;
+      margin-bottom: 30px;
+    }
+
+    .section-text {
+      font-size: 20px;
+      max-width: 760px;
+      color: var(--text-muted);
+    }
+
+    /* INTRO */
+
+    .intro-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .intro-image {
+      min-height: 620px;
+      background:
+        radial-gradient(circle at 22% 24%, rgba(56, 213, 232, 0.16), transparent 24%),
+        linear-gradient(135deg, #182434, #0f1722 60%, #22354c);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+    }
+
+    /* TECHNOLOGIES */
+
+    .tech-showcase {
+      background: var(--brand-bg);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 0;
+    }
+
+    .tech-header {
+      padding: 70px 6% 40px;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      color: var(--brand-text);
+    }
+
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .tech-grid .wide-card + .wide-card {
+      border-left: 1px solid rgba(255,255,255,0.22);
+    }
+
+    .wide-card {
+      min-height: 520px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      padding: 80px 6%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .wide-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 1;
+    }
+
+    .wide-card-content {
+      position: relative;
+      z-index: 2;
+      max-width: 850px;
+    }
+
+    .wide-card h3 {
+      font-size: clamp(44px, 6vw, 82px);
+      line-height: 1;
+      margin-bottom: 24px;
+      letter-spacing: -2px;
+    }
+
+    .wide-card p {
+      font-size: 21px;
+      margin-bottom: 32px;
+      color: rgba(255,255,255,0.9);
+    }
+
+    .rtn-card {
+      background: linear-gradient(135deg, #3a1c11, #7d3419 52%, #a94b1f);
+    }
+
+    .hyper-card {
+      background: linear-gradient(135deg, #10233f, #1852a4 54%, #38a8d9);
+    }
+
+    /* ECOSYSTEM */
+
+    .ecosystem {
+      background: var(--brand-bg);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .ecosystem-grid {
+      display: grid;
+      grid-template-columns: 0.9fr 1fr 1fr;
+      border: 1px solid rgba(56, 213, 232, 0.14);
+      background: var(--brand-surface);
+    }
+
+    .ecosystem-intro,
+    .ecosystem-card {
+      padding: 70px 52px;
+      min-height: 460px;
+      border-right: 1px solid rgba(56, 213, 232, 0.12);
+      color: var(--brand-text);
+    }
+
+    .ecosystem-card:last-child {
+      border-right: none;
+    }
+
+    .ecosystem-intro h2 {
+      font-size: 42px;
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+
+    .ecosystem-intro p {
+      font-size: 19px;
+      margin-bottom: 32px;
+      color: var(--brand-muted);
+    }
+
+    .tech-icon {
+      font-size: 52px;
+      margin-bottom: 28px;
+      color: var(--accent-blue);
+    }
+
+    .ecosystem-card h3 {
+      font-size: 24px;
+      margin-bottom: 18px;
+      letter-spacing: 1px;
+    }
+
+    .ecosystem-card p {
+      color: var(--brand-muted);
+      margin-bottom: 18px;
+      font-size: 18px;
+    }
+
+    .ecosystem-card ul {
+      padding-left: 22px;
+      font-size: 17px;
+      color: var(--brand-muted);
+    }
+
+    /* DIRECTION */
+
+    .direction {
+      background: #fbfdff;
+    }
+
+    .direction-grid {
+      display: grid;
+      grid-template-columns: 0.95fr 1fr;
+      gap: 80px;
+    }
+
+    .direction-copy p {
+      font-size: 20px;
+      color: var(--text-muted);
+      margin-bottom: 28px;
+    }
+
+    .direction-list {
+      border-top: 1px solid var(--text-dark);
+    }
+
+    .direction-item {
+      padding: 28px 0;
+      border-bottom: 1px solid var(--text-dark);
+    }
+
+    .direction-item h3 {
+      font-size: 26px;
+      margin-bottom: 8px;
+    }
+
+    .direction-item p {
+      font-size: 18px;
+      color: var(--text-muted);
+    }
+
+    /* VALIDATION */
+
+    .validation {
+      background:
+        radial-gradient(circle at 20% 20%, rgba(56, 213, 232, 0.16), transparent 22%),
+        linear-gradient(135deg, rgba(9, 17, 29, 0.98), rgba(17, 24, 33, 0.96));
+      color: white;
+      text-align: center;
+    }
+
+    .validation .section-text {
+      margin: 0 auto 36px;
+      color: rgba(255,255,255,0.86);
+    }
+
+    /* COLLABORATION PROCESS */
+
+    .collaboration-process {
+      background: #f3f7fb;
+      border-top: 1px solid rgba(8, 11, 16, 0.12);
+      border-bottom: 1px solid rgba(8, 11, 16, 0.12);
+    }
+
+    .process-header {
+      max-width: 920px;
+      margin-bottom: 62px;
+    }
+
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: rgba(8, 11, 16, 0.16);
+      border: 1px solid rgba(8, 11, 16, 0.16);
+    }
+
+    .process-card {
+      background: #ffffff;
+      padding: 42px 34px;
+      min-height: 380px;
+    }
+
+    .process-card span {
+      display: inline-block;
+      margin-bottom: 28px;
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 3px;
+      color: var(--accent-blue);
+    }
+
+    .process-card h3 {
+      font-size: 26px;
+      line-height: 1.12;
+      margin-bottom: 18px;
+      color: var(--text-dark);
+    }
+
+    .process-card p {
+      font-size: 17px;
+      color: #4a5868;
+    }
+
+    .process-note {
+      margin-top: 34px;
+      padding: 26px 30px;
+      background: var(--brand-surface);
+      color: var(--brand-text);
+      border-left: 4px solid var(--accent-blue);
+      font-size: 18px;
+    }
+
+    .process-note strong {
+      color: #ffffff;
+    }
+
+    /* CONTACT */
+
+    .contact-cta {
+      background: linear-gradient(180deg, var(--brand-surface), var(--brand-bg));
+      color: var(--brand-text);
+    }
+
+    .contact-grid {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 34px;
+      align-items: start;
+    }
+
+    .contact-copy p {
+      max-width: 38ch;
+      margin-bottom: 0;
+      font-size: 20px;
+      color: var(--brand-muted);
+    }
+
+    .cta-points {
+      display: grid;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .cta-points div {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: rgba(245, 247, 250, 0.88);
+      font-size: 15px;
+    }
+
+    .cta-points span {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: rgba(56, 213, 232, 0.92);
+      box-shadow: 0 0 18px rgba(56, 213, 232, 0.34);
+      flex: 0 0 auto;
+    }
+
+    .cta-form-card {
+      background: rgba(245, 247, 250, 0.98);
+      color: var(--text-dark);
+      padding: 34px;
+      border-radius: 30px;
+      box-shadow: 0 28px 70px rgba(0,0,0,0.22);
+    }
+
+    .cta-form-card h3 {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .cta-form-card p {
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--text-muted);
+      margin-bottom: 22px;
+    }
+
+    .contact-form {
+      display: grid;
+      gap: 14px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+    }
+
+    .field label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-dark);
+      letter-spacing: 0.02em;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      border: 1px solid rgba(8, 11, 16, 0.12);
+      border-radius: 16px;
+      background: #fff;
+      color: var(--text-dark);
+      padding: 14px 15px;
+      font: inherit;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color: rgba(56, 213, 232, 0.72);
+      box-shadow: 0 0 0 4px rgba(56, 213, 232, 0.16);
+    }
+
+    .field textarea {
+      min-height: 132px;
+      resize: vertical;
+    }
+
+    .form-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+
+    .cta-form-card .btn-primary {
+      background: var(--brand-surface);
+      color: #fff;
+      border-color: var(--brand-surface);
+    }
+
+    .cta-form-card .btn-primary:hover {
+      background: var(--accent-blue);
+      border-color: var(--accent-blue);
+    }
+
+    .form-status {
+      font-size: 13px;
+      font-weight: 600;
+      color: #3e596a;
+    }
+
+    .form-note {
+      font-size: 13px;
+      color: #556b7b;
+      margin-top: 4px;
+    }
+
+    .form-consent {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 13px;
+      color: #30403f;
+      line-height: 1.45;
+      margin-top: 6px;
+    }
+
+    .form-consent input {
+      margin-top: 3px;
+    }
+
+    .form-consent a {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* FOOTER */
+
+    footer {
+      border-top: 1px solid rgba(56, 213, 232, 0.12);
+      background: var(--brand-surface);
+      color: var(--brand-text);
+      padding: 70px 6% 36px;
+    }
+
+    .footer-grid {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 60px;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent-blue);
+    }
+
+    .footer-title {
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-size: 14px;
+      font-weight: 800;
+      margin-bottom: 18px;
+      color: var(--brand-muted);
+    }
+
+    .footer-bottom {
+      max-width: var(--max-width);
+      margin: 60px auto 0;
+      padding-top: 28px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      gap: 30px;
+      font-size: 14px;
+      color: var(--brand-muted);
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 900px) {
+      .navbar {
+        justify-content: flex-end;
+        gap: 10px;
+        padding: 22px 5%;
+      }
+
+      .nav-links,
+      .navbar > .lang-switcher:not(.mobile-header) {
+        display: none;
+      }
+
+      .lang-switcher.mobile-header {
+        display: block;
+      }
+
+      .lang-switcher.mobile-header .lang {
+        border-radius: 12px;
+      }
+
+      .nav-toggle {
+        display: inline-flex;
+      }
+
+      .brand-icon,
+      .brand-name {
+        font-size: 46px;
+      }
+
+      .brand-name {
+        letter-spacing: 8px;
+      }
+
+      .brand-subtitle {
+        letter-spacing: 5px;
+      }
+
+      .intro-grid,
+      .direction-grid,
+      .ecosystem-grid,
+      .footer-grid,
+      .contact-grid,
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .tech-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .process-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .tech-grid .wide-card + .wide-card {
+        border-left: none;
+        border-top: 1px solid rgba(255,255,255,0.22);
+      }
+
+      .intro-image {
+        min-height: 420px;
+      }
+
+      .ecosystem-intro,
+      .ecosystem-card {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .ecosystem-card:last-child {
+        border-bottom: none;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 560px) {
+      section {
+        padding: 80px 6%;
+      }
+
+      .hero {
+        padding-top: 130px;
+      }
+
+      .section-title {
+        letter-spacing: -1.5px;
+      }
+
+      .hero h1 {
+        letter-spacing: -1.5px;
+      }
+
+      .wide-card {
+        min-height: 460px;
+      }
+
+      .collaboration-process {
+        padding: 80px 6%;
+      }
+
+      .process-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .process-card {
+        min-height: auto;
+      }
+
+      .ecosystem-intro,
+      .ecosystem-card {
+        padding: 52px 32px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar" id="navbar">
+    <nav class="nav-links">
+      <a href="index.html" class="active">Inicio</a>
+      <a href="rtn-null-cell.html">RTN-Null Cell</a>
+      <a href="hypergate.html">HyperGate</a>
+      <a href="#contacto">Contáctanos</a>
+    </nav>
+    <div class="lang-switcher" id="langSwitcher">
+      <button class="lang" type="button" aria-label="Seleccionar idioma" aria-haspopup="true" aria-expanded="false" aria-controls="langMenu" id="langToggle">
+        <span>ES</span>
+        <span class="lang-caret" aria-hidden="true">⌄</span>
+      </button>
+      <div class="lang-menu" id="langMenu" hidden>
+        <a href="index.html" class="active">
+          <span>Español</span>
+        </a>
+        <a href="index-en.html">
+          <span>English</span>
+        </a>
+      </div>
+    </div>
+    <div class="lang-switcher mobile-header" id="langSwitcherMobile">
+      <button class="lang" type="button" aria-label="Seleccionar idioma" aria-haspopup="true" aria-expanded="false" aria-controls="langMenuMobile" id="langToggleMobile">
+        <span>ES</span>
+        <span class="lang-caret" aria-hidden="true">⌄</span>
+      </button>
+      <div class="lang-menu" id="langMenuMobile" hidden>
+        <a href="index.html" class="active">
+          <span>Español</span>
+        </a>
+        <a href="index-en.html">
+          <span>English</span>
+        </a>
+      </div>
+    </div>
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="Abrir menú" aria-controls="mobileMenu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <div class="mobile-backdrop" id="mobileBackdrop" hidden></div>
+  <div class="mobile-menu" id="mobileMenu" hidden>
+    <a href="index.html" class="active">Inicio</a>
+    <a href="rtn-null-cell.html">RTN-Null Cell</a>
+    <a href="hypergate.html">HyperGate</a>
+    <a href="#contacto">Contáctanos</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero" id="inicio">
+    <div class="hero-content">
+      <div class="brand-mark">
+        <div class="brand-icon">T</div>
+        <div class="brand-name">TERACT</div>
+        <div class="brand-subtitle">Semiconductores · Memristor · Transistor</div>
+      </div>
+
+      <h1>Infraestructura Semiconductor para la Próxima Era del Cómputo</h1>
+
+      <p>
+        Desarrollamos arquitecturas avanzadas para memoria y transistores,
+        enfocadas en estabilidad, eficiencia energética y escalabilidad para
+        sistemas de alto rendimiento.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#tecnologias" class="btn btn-primary">Explorar tecnologías</a>
+        <a href="#contacto" class="btn btn-outline">Contactar</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTRO -->
+  <section class="intro">
+    <div class="container intro-grid">
+      <div>
+        <p class="eyebrow">Infraestructura para IA</p>
+        <h2 class="section-title">La base física del cómputo moderno está cambiando</h2>
+        <p class="section-text">
+          El crecimiento de la inteligencia artificial, HPC y sistemas autónomos exige
+          nuevas arquitecturas a nivel dispositivo: memorias más estables, transistores
+          más eficientes y tecnologías capaces de operar bajo límites energéticos,
+          térmicos y estructurales cada vez más estrictos.
+        </p>
+      </div>
+
+      <div class="intro-image" aria-label="Infraestructura semiconductor para IA"></div>
+    </div>
+  </section>
+
+  <!-- TECHNOLOGIES -->
+  <section class="tech-showcase" id="tecnologias">
+    <div class="tech-header">
+      <p class="eyebrow">Nuestras tecnologías</p>
+    </div>
+
+    <div class="tech-grid">
+      <article class="wide-card rtn-card">
+        <div class="wide-card-content">
+          <h3>RTN-Null Cell</h3>
+          <p>
+            Arquitectura de memoria ReRAM/VCM diseñada para reducir ruido telegráfico
+            aleatorio, mejorar estabilidad de lectura y habilitar memoria no volátil de
+            próxima generación.
+          </p>
+          <a href="rtn-null-cell.html" class="btn btn-outline">Ver RTN-Null Cell</a>
+        </div>
+      </article>
+
+      <article class="wide-card hyper-card">
+        <div class="wide-card-content">
+          <h3>HyperGate V40</h3>
+          <p>
+            Arquitectura de compuerta GAA-FET para nodos sub-2nm, enfocada en enfrentar
+            la fuga por túnel directo y extender la eficiencia energética en la era Ángstrom.
+          </p>
+          <a href="hypergate.html" class="btn btn-outline">Ver HyperGate</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ECOSYSTEM -->
+  <section class="ecosystem">
+    <div class="container ecosystem-grid">
+      <div class="ecosystem-intro">
+        <h2>Ecosistema TERACT</h2>
+        <p>
+          Dos arquitecturas. Una misma visión: extender los límites físicos del cómputo
+          moderno desde memoria, transistor y transferencia tecnológica.
+        </p>
+        <a href="#contacto" class="btn btn-dark">Iniciar conversación</a>
+      </div>
+
+      <div class="ecosystem-card">
+        <div class="tech-icon">⚙</div>
+        <h3>RTN-Null Cell</h3>
+        <p>
+          Arquitectura orientada a mejorar la estabilidad de memorias ReRAM mediante
+          reducción de ruido, variabilidad y degradación operativa.
+        </p>
+        <ul>
+          <li>Memoria ReRAM / VCM.</li>
+          <li>Reducción de RTN y TLS.</li>
+          <li>Estabilidad en lectura HRS.</li>
+          <li>Compatibilidad con procesos CMOS.</li>
+        </ul>
+      </div>
+
+      <div class="ecosystem-card">
+        <div class="tech-icon">✦</div>
+        <h3>HyperGate V40</h3>
+        <p>
+          Arquitectura de gate stack diseñada para procesos GAA-FET avanzados,
+          enfocada en control electrostático y reducción de fuga de compuerta.
+        </p>
+        <ul>
+          <li>Transistor GAA-FET.</li>
+          <li>Escalamiento sub-2nm.</li>
+          <li>Reducción de leakage.</li>
+          <li>Enfoque para foundries y fabless.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIRECTION -->
+  <section class="direction">
+    <div class="container direction-grid">
+      <div class="direction-copy">
+        <h2 class="section-title">Nuestra Dirección Tecnológica</h2>
+
+        <p>
+          Diseñamos tecnologías semiconductoras con una visión clara: construir la
+          infraestructura que hará posible la próxima generación de cómputo.
+        </p>
+
+        <p>
+          Cada arquitectura responde a desafíos reales de la industria, desde la
+          eficiencia energética y la escalabilidad hasta la integración de sistemas cada
+          vez más complejos.
+        </p>
+      </div>
+
+      <div class="direction-list">
+        <div class="direction-item">
+          <h3>Rendimiento Escalable</h3>
+          <p>
+            Arquitecturas diseñadas para responder al crecimiento de la demanda
+            computacional en IA, HPC y sistemas de alto rendimiento.
+          </p>
+        </div>
+
+        <div class="direction-item">
+          <h3>Eficiencia Energética</h3>
+          <p>
+            Soluciones orientadas a reducir pérdidas eléctricas, mejorar estabilidad
+            operativa y optimizar consumo a nivel dispositivo.
+          </p>
+        </div>
+
+        <div class="direction-item">
+          <h3>Compatibilidad Industrial</h3>
+          <p>
+            Enfoque basado en materiales y procesos CMOS estándar para reducir barreras
+            de adopción en manufactura avanzada.
+          </p>
+        </div>
+
+        <div class="direction-item">
+          <h3>Validación Conjunta</h3>
+          <p>
+            Ruta de colaboración técnica para caracterización eléctrica, pruebas
+            comparativas y desarrollo bajo NDA.
+          </p>
+        </div>
+
+        <div class="direction-item">
+          <h3>Estructuración Comercial Flexible</h3>
+          <p>
+            Modelo abierto a distintas rutas de colaboración, integración, licenciamiento,
+            transferencia parcial, desarrollo conjunto u otras estructuras negociadas según
+            el caso.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COLLABORATION PROCESS -->
+  <section class="collaboration-process" id="colaboracion">
+    <div class="container">
+      <div class="process-header">
+        <p class="eyebrow">Proceso de colaboración</p>
+        <h2 class="section-title">Primero entendemos el caso. Después definimos la ruta.</h2>
+        <p class="section-text">
+          No partimos de una modalidad comercial fija. Analizamos las necesidades técnicas,
+          estratégicas y operativas de cada organización para definir una estructura de
+          colaboración adecuada, protegiendo la tecnología y manteniendo abiertas las
+          alternativas de negociación.
+        </p>
+      </div>
+
+      <div class="process-grid">
+        <article class="process-card">
+          <span>01</span>
+          <h3>Diagnóstico técnico y estratégico</h3>
+          <p>
+            Analizamos el caso de uso, restricciones, entorno de hardware, objetivos de
+            rendimiento, prioridad estratégica y posibles escenarios de integración.
+          </p>
+        </article>
+
+        <article class="process-card">
+          <span>02</span>
+          <h3>Validación controlada</h3>
+          <p>
+            Definimos una prueba técnica bajo condiciones acordadas, con métricas de
+            estabilidad, precisión, trazabilidad, rendimiento y comparación contra referencias
+            existentes.
+          </p>
+        </article>
+
+        <article class="process-card">
+          <span>03</span>
+          <h3>Estructuración comercial flexible</h3>
+          <p>
+            La modalidad se define después de entender el valor generado. Puede contemplar
+            licencia, integración tecnológica, desarrollo conjunto, transferencia parcial de
+            derechos, exclusividad limitada u otra estructura negociada.
+          </p>
+        </article>
+
+        <article class="process-card">
+          <span>04</span>
+          <h3>Integración o transferencia acordada</h3>
+          <p>
+            Una vez definido el alcance, se formalizan derechos, límites de uso, duración,
+            territorios, sectores, acceso técnico, confidencialidad y condiciones de
+            implementación.
+          </p>
+        </article>
+      </div>
+
+      <div class="process-note">
+        <strong>Divulgación progresiva:</strong>
+        La información técnica sensible se comparte de forma gradual, bajo NDA y con mínima
+        divulgación necesaria según el avance de la conversación.
+      </div>
+    </div>
+  </section>
+
+  <!-- VALIDATION -->
+  <section class="validation">
+    <div class="container">
+      <p class="eyebrow">Validación y colaboración</p>
+      <h2 class="section-title">De la arquitectura matemática a la validación física</h2>
+
+      <p class="section-text">
+        TERACT busca colaborar con centros de investigación, foundries, empresas
+        fabless, socios industriales e inversionistas deep-tech para validar sus
+        arquitecturas mediante caracterización eléctrica, lotes de prueba y análisis
+        comparativo bajo acuerdos de confidencialidad.
+      </p>
+
+      <a href="#contacto" class="btn btn-primary">Solicitar conversación técnica</a>
+    </div>
+  </section>
+
+  <!-- CONTACT CTA -->
+  <section class="contact-cta" id="contacto">
+    <div class="contact-grid">
+      <div class="contact-copy">
+        <p class="eyebrow">Contáctanos</p>
+        <h2 class="section-title">Hablemos de colaboración técnica</h2>
+
+        <p>
+          Si representas una empresa de semiconductores, centro de investigación,
+          fondo deep-tech o socio estratégico, comparte tu interés y preparamos la
+          conversación adecuada para validación técnica, colaboración estratégica o una
+          estructura comercial adecuada al caso.
+        </p>
+
+        <div class="cta-points">
+          <div><span></span> Validación, pruebas comparativas y acuerdos bajo NDA.</div>
+          <div><span></span> Modalidades flexibles de integración, colaboración o transferencia tecnológica.</div>
+          <div><span></span> Conversaciones estratégicas con industria e inversión deep-tech.</div>
+        </div>
+      </div>
+
+      <div class="cta-form-card">
+        <h3>Solicita información confidencial</h3>
+        <p>
+          Completa el formulario y preparamos la conversación adecuada para NDA,
+          validación técnica, estructura comercial, colaboración estratégica o integración industrial.
+        </p>
+
+        <form class="contact-form" id="contact-form">
+          <div class="form-row">
+            <div class="field">
+              <label for="contact-name">Nombre</label>
+              <input id="contact-name" name="name" autocomplete="name" required />
+            </div>
+
+            <div class="field">
+              <label for="contact-company">Empresa o institución</label>
+              <input id="contact-company" name="company" autocomplete="organization" required />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="field">
+              <label for="contact-email">Email</label>
+              <input id="contact-email" name="email" type="email" autocomplete="email" required />
+            </div>
+
+            <div class="field">
+              <label for="contact-phone">Teléfono</label>
+              <input id="contact-phone" name="phone" type="tel" autocomplete="tel" placeholder="+__" required />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="field">
+              <label for="contact-sector">Sector</label>
+              <select id="contact-sector" name="sector" required>
+                <option value="" selected disabled>Selecciona una opción</option>
+                <option value="semiconductores">Empresa de semiconductores</option>
+                <option value="fabless">Fabless</option>
+                <option value="idm">IDM</option>
+                <option value="foundry">Foundry</option>
+                <option value="investigacion">Centro de investigación / universidad</option>
+                <option value="defensa">Defensa / gobierno</option>
+                <option value="inversion">Inversión deep-tech</option>
+                <option value="otro">Otro</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="contact-interest">Interés</label>
+              <select id="contact-interest" name="interest" required>
+                <option value="" selected disabled>Selecciona una opción</option>
+                <option value="nda">Solicitud de NDA</option>
+                <option value="validacion">Validación técnica</option>
+                <option value="comercial">Explorar estructura comercial</option>
+                <option value="alianza">Alianza estratégica</option>
+                <option value="integracion">Integración industrial</option>
+                <option value="inversion">Inversión deep-tech</option>
+                <option value="tecnica">Conversación técnica</option>
+                <option value="otro">Otro</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="contact-message">Mensaje</label>
+            <textarea
+              id="contact-message"
+              name="message"
+              required
+              placeholder="Comparte tu caso de uso, objetivo técnico, etapa de evaluación o el tipo de acceso técnico que necesitas."
+            ></textarea>
+          </div>
+
+          <div class="form-consent">
+            <input id="contact-privacy" name="privacy" type="checkbox" value="accepted" required />
+            <label for="contact-privacy">
+              He leído y acepto el <a href="politica-privacidad.html">aviso de privacidad</a> y autorizo el
+              tratamiento de mis datos conforme a la LFPDPPP.
+            </label>
+          </div>
+
+          <div class="form-actions">
+            <button class="btn btn-primary" type="submit">Enviar solicitud</button>
+            <span class="form-status" id="contact-status" aria-live="polite"></span>
+          </div>
+
+          <div class="form-note">
+            El formulario prepara un correo dirigido a info@teract.com con tu solicitud.
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-links">
+        <a href="index.html">Inicio</a>
+        <a href="rtn-null-cell.html">RTN-Null Cell</a>
+        <a href="hypergate.html">HyperGate</a>
+        <a href="#contacto">Contáctanos</a>
+      </div>
+
+      <div>
+        <p class="footer-title">Oficina Central</p>
+        <p>Puebla, México</p>
+        <p>+52 222 964 8206</p>
+      </div>
+
+      <div>
+        <p class="footer-title">TERACT Semiconductores</p>
+        <p>
+          Arquitecturas avanzadas para memoria, transistor y cómputo de próxima generación.
+        </p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p><a href="politica-privacidad.html">Política de Privacidad</a></p>
+      <p>© 2026 TERACT Semiconductores. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <script>
+    const navbar = document.getElementById("navbar");
+
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 80) {
+        navbar.classList.add("scrolled");
+      } else {
+        navbar.classList.remove("scrolled");
+      }
+    });
+
+    (() => {
+      const toggle = document.getElementById("navToggle");
+      const menu = document.getElementById("mobileMenu");
+      const backdrop = document.getElementById("mobileBackdrop");
+
+      if (!toggle || !menu || !backdrop) return;
+
+      function setOpen(open) {
+        toggle.setAttribute("aria-expanded", open ? "true" : "false");
+        menu.hidden = !open;
+        backdrop.hidden = !open;
+        document.body.classList.toggle("menu-open", open);
+      }
+
+      toggle.addEventListener("click", () => {
+        setOpen(menu.hidden);
+      });
+
+      backdrop.addEventListener("click", () => {
+        setOpen(false);
+      });
+
+      menu.addEventListener("click", (event) => {
+        const link = event.target.closest("a");
+        if (!link) return;
+        setOpen(false);
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") setOpen(false);
+      });
+
+      window.addEventListener("resize", () => {
+        if (window.innerWidth > 900) setOpen(false);
+      });
+    })();
+
+    (() => {
+      const form = document.getElementById("contact-form");
+      const status = document.getElementById("contact-status");
+      const sectorField = document.getElementById("contact-sector");
+      const interestField = document.getElementById("contact-interest");
+
+      if (!form || !sectorField || !interestField) return;
+
+      const subjects = {
+        nda: "Solicitud de NDA - TERACT",
+        validacion: "Validacion tecnica - TERACT",
+        comercial: "Explorar estructura comercial - TERACT",
+        alianza: "Alianza estrategica - TERACT",
+        integracion: "Integracion industrial - TERACT",
+        inversion: "Interes de inversion deep-tech - TERACT",
+        tecnica: "Conversacion tecnica - TERACT",
+        otro: "Consulta general - TERACT"
+      };
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const formData = new FormData(form);
+        const selectedSector = sectorField.options[sectorField.selectedIndex];
+        const sectorLabel = selectedSector ? selectedSector.text : "";
+        const selectedOption = interestField.options[interestField.selectedIndex];
+        const interestLabel = selectedOption ? selectedOption.text : "";
+        const interestValue = formData.get("interest");
+        const subject = subjects[interestValue] || "Consulta general - TERACT";
+        const body = [
+          "Nombre: " + (formData.get("name") || ""),
+          "Empresa: " + (formData.get("company") || ""),
+          "Email: " + (formData.get("email") || ""),
+          "Telefono: " + (formData.get("phone") || ""),
+          "Sector: " + sectorLabel,
+          "Interes: " + interestLabel,
+          "Privacidad: Aceptada",
+          "",
+          "Mensaje:",
+          formData.get("message") || ""
+        ].join("\n");
+
+        if (status) {
+          status.textContent = "Abriendo tu cliente de correo...";
+        }
+
+        window.location.href =
+          "mailto:info@teract.com?subject=" +
+          encodeURIComponent(subject) +
+          "&body=" +
+          encodeURIComponent(body);
+      });
+    })();
+
+    (() => {
+      function initLang(switcherId, toggleId, menuId) {
+        const switcher = document.getElementById(switcherId);
+        const toggle = document.getElementById(toggleId);
+        const menu = document.getElementById(menuId);
+
+        if (!switcher || !toggle || !menu) return;
+
+        function close() {
+          menu.hidden = true;
+          switcher.classList.remove("open");
+          toggle.setAttribute("aria-expanded", "false");
+        }
+
+        function open() {
+          menu.hidden = false;
+          switcher.classList.add("open");
+          toggle.setAttribute("aria-expanded", "true");
+        }
+
+        toggle.addEventListener("click", (event) => {
+          event.stopPropagation();
+          if (menu.hidden) open();
+          else close();
+        });
+
+        document.addEventListener("click", (event) => {
+          if (!switcher.contains(event.target)) close();
+        });
+
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape") close();
+        });
+      }
+
+      initLang("langSwitcher", "langToggle", "langMenu");
+      initLang("langSwitcherMobile", "langToggleMobile", "langMenuMobile");
+    })();
+  </script>
+
+</body>
+</html>
