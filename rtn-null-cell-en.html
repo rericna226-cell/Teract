@@ -331,14 +331,13 @@
     }
 
     .product-logo-main {
-      font-size: clamp(48px, 7vw, 94px);
-      font-weight: 900;
-      letter-spacing: 8px;
       line-height: 1;
     }
 
-    .product-logo-main span {
-      color: var(--accent-orange);
+    .product-logo-main img {
+      display: block;
+      width: min(100%, 640px);
+      height: auto;
     }
 
     .product-logo-sub {
@@ -1070,7 +1069,9 @@
   <section class="hero">
     <div class="hero-content">
       <div class="product-logo">
-        <div class="product-logo-main">RTN-NULL <span>CELL</span></div>
+        <div class="product-logo-main">
+          <img src="Visuales/rtn-NullLOGO.png" alt="RTN-Null Cell" />
+        </div>
         <div class="product-logo-sub">Memristor · Redefining signal purity</div>
       </div>
 

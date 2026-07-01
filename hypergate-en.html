@@ -330,23 +330,14 @@
       margin-bottom: 44px;
     }
 
-    .product-symbol {
-      font-size: clamp(54px, 7vw, 100px);
-      line-height: 1;
-      color: var(--accent-cyan);
-      margin-bottom: 16px;
-      text-shadow: 0 0 35px rgba(75, 229, 255, 0.45);
-    }
-
     .product-logo-main {
-      font-size: clamp(48px, 7vw, 94px);
-      font-weight: 900;
-      letter-spacing: 10px;
       line-height: 1;
     }
 
-    .product-logo-main span {
-      color: var(--accent-blue);
+    .product-logo-main img {
+      display: block;
+      width: min(100%, 520px);
+      height: auto;
     }
 
     .product-logo-sub {
@@ -1063,8 +1054,9 @@
   <section class="hero">
     <div class="hero-content">
       <div class="product-logo">
-        <div class="product-symbol">✦</div>
-        <div class="product-logo-main">HYPER<span>GATE</span></div>
+        <div class="product-logo-main">
+          <img src="Visuales/HypergateLOGO.png" alt="HyperGate" />
+        </div>
         <div class="product-logo-sub">Transistor · A new dimension of performance</div>
       </div>
 
