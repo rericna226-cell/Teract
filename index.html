@@ -456,6 +456,17 @@
       letter-spacing: -2px;
     }
 
+    .wide-card h3.tech-logo-title {
+      margin-bottom: 24px;
+      line-height: 0;
+    }
+
+    .wide-card h3.tech-logo-title img {
+      display: block;
+      width: min(100%, 520px);
+      height: auto;
+    }
+
     .wide-card p {
       font-size: 21px;
       margin-bottom: 32px;
@@ -518,6 +529,17 @@
       font-size: 24px;
       margin-bottom: 18px;
       letter-spacing: 1px;
+    }
+
+    .ecosystem-card h3.tech-logo-title {
+      margin-bottom: 18px;
+      line-height: 0;
+    }
+
+    .ecosystem-card h3.tech-logo-title img {
+      display: block;
+      width: min(100%, 320px);
+      height: auto;
     }
 
     .ecosystem-card p {
@@ -1081,7 +1103,9 @@
     <div class="tech-grid">
       <article class="wide-card rtn-card">
         <div class="wide-card-content">
-          <h3>RTN-Null Cell</h3>
+          <h3 class="tech-logo-title">
+            <img src="Visuales/rtn-NullLOGO.png" alt="RTN-Null Cell" />
+          </h3>
           <p>
             Arquitectura de memoria ReRAM/VCM diseñada para reducir ruido telegráfico
             aleatorio, mejorar estabilidad de lectura y habilitar memoria no volátil de
@@ -1093,7 +1117,9 @@
 
       <article class="wide-card hyper-card">
         <div class="wide-card-content">
-          <h3>HyperGate V40</h3>
+          <h3 class="tech-logo-title">
+            <img src="Visuales/HypergateLOGO.png" alt="HyperGate V40" />
+          </h3>
           <p>
             Arquitectura de compuerta GAA-FET para nodos sub-2nm, enfocada en enfrentar
             la fuga por túnel directo y extender la eficiencia energética en la era Ángstrom.
@@ -1118,7 +1144,9 @@
 
       <div class="ecosystem-card">
         <div class="tech-icon">⚙</div>
-        <h3>RTN-Null Cell</h3>
+        <h3 class="tech-logo-title">
+          <img src="Visuales/rtn-NullLOGO.png" alt="RTN-Null Cell" />
+        </h3>
         <p>
           Arquitectura orientada a mejorar la estabilidad de memorias ReRAM mediante
           reducción de ruido, variabilidad y degradación operativa.
@@ -1133,7 +1161,9 @@
 
       <div class="ecosystem-card">
         <div class="tech-icon">✦</div>
-        <h3>HyperGate V40</h3>
+        <h3 class="tech-logo-title">
+          <img src="Visuales/HypergateLOGO.png" alt="HyperGate V40" />
+        </h3>
         <p>
           Arquitectura de gate stack diseñada para procesos GAA-FET avanzados,
           enfocada en control electrostático y reducción de fuga de compuerta.
