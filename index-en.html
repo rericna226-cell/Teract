@@ -3,6 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="favicon (4)/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon (4)/favicon-96x96.png" />
+  <link rel="shortcut icon" href="favicon (4)/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="favicon (4)/apple-touch-icon.png" />
+  <link rel="manifest" href="favicon (4)/site.webmanifest" />
   <title>TERACT Semiconductors</title>
 
   <style>
@@ -786,6 +791,25 @@
       margin-top: 4px;
     }
 
+    .form-consent {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 13px;
+      color: #30403f;
+      line-height: 1.45;
+      margin-top: 6px;
+    }
+
+    .form-consent input {
+      margin-top: 3px;
+    }
+
+    .form-consent a {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
     /* FOOTER */
 
     footer {
@@ -1289,10 +1313,10 @@
       </div>
 
       <div class="cta-form-card">
-        <h3>Request a conversation</h3>
+        <h3>Request confidential information</h3>
         <p>
-          Complete the form and we will route your request to the technical or
-          strategic team at TERACT.
+          Complete the form and we will prepare the right conversation for NDA,
+          technical validation, commercial structure, strategic collaboration or industrial integration.
         </p>
 
         <form class="contact-form" id="contact-form">
@@ -1315,19 +1339,24 @@
             </div>
 
             <div class="field">
-              <label for="contact-role">Role / title</label>
-              <input id="contact-role" name="role" autocomplete="organization-title" required />
+              <label for="contact-phone">Phone</label>
+              <input id="contact-phone" name="phone" type="tel" autocomplete="tel" placeholder="+__" required />
             </div>
           </div>
 
           <div class="form-row">
             <div class="field">
-              <label for="contact-stage">Stage</label>
-              <select id="contact-stage" name="stage" required>
-                <option value="" selected disabled>Select a stage</option>
-                <option value="exploring">Exploring</option>
-                <option value="evaluating">Evaluating</option>
-                <option value="ready-to-validate">Ready to validate</option>
+              <label for="contact-sector">Sector</label>
+              <select id="contact-sector" name="sector" required>
+                <option value="" selected disabled>Select an option</option>
+                <option value="semiconductors">Semiconductor company</option>
+                <option value="fabless">Fabless</option>
+                <option value="idm">IDM</option>
+                <option value="foundry">Foundry</option>
+                <option value="research">Research center / university</option>
+                <option value="defense">Defense / government</option>
+                <option value="investment">Deep-tech investment</option>
+                <option value="other">Other</option>
               </select>
             </div>
 
@@ -1335,10 +1364,12 @@
               <label for="contact-interest">Interest</label>
               <select id="contact-interest" name="interest" required>
                 <option value="" selected disabled>Select an option</option>
+                <option value="nda">NDA request</option>
                 <option value="validacion">Technical validation</option>
-                <option value="licenciamiento">Explore commercial structure</option>
-                <option value="inversion">Deep-tech investment</option>
+                <option value="comercial">Explore commercial structure</option>
                 <option value="alianza">Strategic partnership</option>
+                <option value="integracion">Industrial integration</option>
+                <option value="inversion">Deep-tech investment</option>
                 <option value="tecnica">Technical conversation</option>
                 <option value="otro">Other</option>
               </select>
@@ -1351,8 +1382,16 @@
               id="contact-message"
               name="message"
               required
-              placeholder="Share your use case, technical objective, evaluation stage or the kind of collaboration you are looking for."
+              placeholder="Share your use case, technical objective, evaluation stage or the kind of technical access you need."
             ></textarea>
+          </div>
+
+          <div class="form-consent">
+            <input id="contact-privacy" name="privacy" type="checkbox" value="accepted" required />
+            <label for="contact-privacy">
+              I have read and accept the <a href="politica-privacidad-en.html">privacy notice</a> and authorize the
+              processing of my data in accordance with the applicable law.
+            </label>
           </div>
 
           <div class="form-actions">
@@ -1361,9 +1400,7 @@
           </div>
 
           <div class="form-note">
-            Sensitive technical information is shared only progressively,
-            under NDA and with the minimum disclosure necessary. The form prepares an email
-            addressed to contacto@teract.com with your request.
+            The form prepares an email addressed to info@teract.com with your request.
           </div>
         </form>
       </div>
@@ -1451,15 +1488,18 @@
     (() => {
       const form = document.getElementById("contact-form");
       const status = document.getElementById("contact-status");
+      const sectorField = document.getElementById("contact-sector");
       const interestField = document.getElementById("contact-interest");
 
-      if (!form || !interestField) return;
+      if (!form || !sectorField || !interestField) return;
 
       const subjects = {
+        nda: "NDA request - TERACT",
         validacion: "Technical validation - TERACT",
-        licenciamiento: "Explore commercial structure - TERACT",
-        inversion: "Deep-tech investment interest - TERACT",
+        comercial: "Explore commercial structure - TERACT",
         alianza: "Strategic partnership - TERACT",
+        integracion: "Industrial integration - TERACT",
+        inversion: "Deep-tech investment interest - TERACT",
         tecnica: "Technical conversation - TERACT",
         otro: "General inquiry - TERACT"
       };
@@ -1468,17 +1508,20 @@
         event.preventDefault();
 
         const formData = new FormData(form);
+        const selectedSector = sectorField.options[sectorField.selectedIndex];
+        const sectorLabel = selectedSector ? selectedSector.text : "";
         const selectedOption = interestField.options[interestField.selectedIndex];
         const interestLabel = selectedOption ? selectedOption.text : "";
         const interestValue = formData.get("interest");
         const subject = subjects[interestValue] || "General inquiry - TERACT";
         const body = [
           "Name: " + (formData.get("name") || ""),
-          "Company or institution: " + (formData.get("company") || ""),
+          "Company: " + (formData.get("company") || ""),
           "Email: " + (formData.get("email") || ""),
-          "Role / title: " + (formData.get("role") || ""),
-          "Stage: " + (formData.get("stage") || ""),
+          "Phone: " + (formData.get("phone") || ""),
+          "Sector: " + sectorLabel,
           "Interest: " + interestLabel,
+          "Privacy notice: Accepted",
           "",
           "Message:",
           formData.get("message") || ""
@@ -1489,7 +1532,7 @@
         }
 
         window.location.href =
-          "mailto:contacto@teract.com?subject=" +
+          "mailto:info@teract.com?subject=" +
           encodeURIComponent(subject) +
           "&body=" +
           encodeURIComponent(body);
