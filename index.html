@@ -1557,6 +1557,39 @@
     })();
 
     (() => {
+      const LANG_SCROLL_RESTORE_KEY = "langScrollRestore";
+      const LANG_SCROLL_Y_KEY = "langScrollY";
+
+      window.addEventListener("load", () => {
+        const restore = sessionStorage.getItem(LANG_SCROLL_RESTORE_KEY) === "1";
+        const y = sessionStorage.getItem(LANG_SCROLL_Y_KEY);
+
+        if (restore && y && !window.location.hash) {
+          sessionStorage.removeItem(LANG_SCROLL_RESTORE_KEY);
+          sessionStorage.removeItem(LANG_SCROLL_Y_KEY);
+          window.requestAnimationFrame(() => {
+            window.scrollTo(0, Number(y));
+          });
+        }
+      });
+
+      function navigateWithLanguageContext(href) {
+        if (!href) return;
+
+        const currentHash = window.location.hash;
+
+        if (currentHash && !href.includes("#")) {
+          sessionStorage.removeItem(LANG_SCROLL_RESTORE_KEY);
+          sessionStorage.removeItem(LANG_SCROLL_Y_KEY);
+          window.location.href = href + currentHash;
+          return;
+        }
+
+        sessionStorage.setItem(LANG_SCROLL_RESTORE_KEY, "1");
+        sessionStorage.setItem(LANG_SCROLL_Y_KEY, String(window.scrollY));
+        window.location.href = href;
+      }
+
       function initLang(switcherId, toggleId, menuId) {
         const switcher = document.getElementById(switcherId);
         const toggle = document.getElementById(toggleId);
@@ -1588,6 +1621,14 @@
 
         document.addEventListener("keydown", (event) => {
           if (event.key === "Escape") close();
+        });
+
+        menu.querySelectorAll("a").forEach((link) => {
+          link.addEventListener("click", (event) => {
+            event.preventDefault();
+            close();
+            navigateWithLanguageContext(link.getAttribute("href"));
+          });
         });
       }
 
