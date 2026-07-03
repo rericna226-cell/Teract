@@ -387,8 +387,11 @@
     .split-image {
       min-height: 560px;
       background:
-        radial-gradient(circle at 18% 20%, rgba(255,255,255,0.18), transparent 22%),
-        linear-gradient(135deg, #ff8a52, #8d3218 56%, #3a160e);
+        linear-gradient(135deg, rgba(0,0,0,0.12), rgba(0,0,0,0.55)),
+        url("Visuales/RTN-Null Cell.png");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
       box-shadow: 0 20px 60px rgba(0,0,0,0.14);
     }
 
@@ -567,86 +570,8 @@
       box-shadow: 0 18px 50px rgba(13, 10, 8, 0.08);
     }
 
-    .panel-image {
-      position: relative;
-      min-height: 300px;
-      border-radius: 22px;
-      overflow: hidden;
-      display: flex;
-      align-items: flex-end;
-      padding: 24px;
-      background:
-        radial-gradient(circle at 18% 22%, rgba(255,255,255,0.65), transparent 28%),
-        linear-gradient(135deg, rgba(255, 90, 31, 0.96), rgba(215, 164, 65, 0.84));
-    }
-
-    .panel-image::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(rgba(255,255,255,0.12) 1px, transparent 1px);
-      background-size: 100% 56px;
-      opacity: 0.24;
-    }
-
-    .panel-image::after {
-      content: "";
-      position: absolute;
-      inset: 16% 12%;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.24);
-      box-shadow:
-        0 0 0 26px rgba(255,255,255,0.05),
-        0 0 0 52px rgba(255,255,255,0.04);
-    }
-
-    .panel-image[data-tone="stoich"] {
-      background:
-        radial-gradient(circle at 18% 22%, rgba(255,255,255,0.58), transparent 28%),
-        linear-gradient(135deg, #ff7d45, #7a2214 82%);
-    }
-
-    .panel-image[data-tone="electrodes"] {
-      background:
-        radial-gradient(circle at 18% 22%, rgba(255,255,255,0.5), transparent 28%),
-        linear-gradient(135deg, #d7a441, #59351a 84%);
-    }
-
-    .panel-image[data-tone="beol"] {
-      background:
-        radial-gradient(circle at 18% 22%, rgba(255,255,255,0.48), transparent 28%),
-        linear-gradient(135deg, #ff5a1f, #0d0a08 82%);
-    }
-
-    .panel-image-overlay {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      height: 34%;
-      border-top: 1px solid rgba(255,255,255,0.22);
-      background: linear-gradient(90deg, rgba(255,255,255,0.06), rgba(13, 10, 8, 0.4));
-      box-shadow:
-        0 0 40px rgba(255, 255, 255, 0.06),
-        inset 0 0 50px rgba(255, 255, 255, 0.05);
-    }
-
-    .panel-image-label {
-      position: relative;
-      z-index: 1;
-      max-width: 320px;
-      padding: 12px 16px;
-      border-radius: 14px;
-      background: rgba(13, 10, 8, 0.55);
-      color: white;
-      font-size: 13px;
-      font-weight: 800;
-      letter-spacing: 1.8px;
-      text-transform: uppercase;
-    }
-
     .industry-panel h3 {
-      margin-top: 22px;
+      margin-top: 0;
       margin-bottom: 12px;
       font-size: 28px;
       line-height: 1.1;
@@ -1291,10 +1216,6 @@
           </div>
 
           <div class="industry-panel" id="industry-panel">
-            <div class="panel-image" id="panel-image" data-tone="ald">
-              <div class="panel-image-overlay"></div>
-              <div class="panel-image-label" id="panel-image-label">Industrial-flow-compatible process</div>
-            </div>
             <h3 id="panel-title">HfO2 via ALD</h3>
             <p id="panel-copy">
               Use of hafnium oxide deposited by Atomic Layer Deposition as a
@@ -1522,33 +1443,23 @@
     const manufacturePanels = {
       ald: {
         title: "HfO2 via ALD",
-        copy: "Use of hafnium oxide deposited by Atomic Layer Deposition as a dielectric base compatible with industrial flows.",
-        label: "Industrial-flow-compatible process",
-        tone: "ald"
+        copy: "Use of hafnium oxide deposited by Atomic Layer Deposition as a dielectric base compatible with industrial flows."
       },
       stoich: {
         title: "Stoichiometry modulation",
-        copy: "Controlled oxygen gradient to define the active region and preserve the structural stability of the stack.",
-        label: "Fine control of vacancies and signal",
-        tone: "stoich"
+        copy: "Controlled oxygen gradient to define the active region and preserve the structural stability of the stack."
       },
       electrodes: {
         title: "TiN / Pt / W electrodes",
-        copy: "Compatibility with standard metal electrodes used in advanced memory architectures and CMOS processes.",
-        label: "Stable interface with standard metals",
-        tone: "electrodes"
+        copy: "Compatibility with standard metal electrodes used in advanced memory architectures and CMOS processes."
       },
       beol: {
         title: "BEOL integration",
-        copy: "Approach oriented toward post-transistor integration, enabling a potential path toward high-density non-volatile memory.",
-        label: "Post-transistor integration path",
-        tone: "beol"
+        copy: "Approach oriented toward post-transistor integration, enabling a potential path toward high-density non-volatile memory."
       }
     };
 
     const industryButtons = document.querySelectorAll(".industry");
-    const panelImage = document.getElementById("panel-image");
-    const panelImageLabel = document.getElementById("panel-image-label");
     const panelTitle = document.getElementById("panel-title");
     const panelCopy = document.getElementById("panel-copy");
 
@@ -1603,8 +1514,6 @@
           item.setAttribute("aria-pressed", item === button ? "true" : "false");
         });
 
-        panelImage.dataset.tone = panelData.tone;
-        panelImageLabel.textContent = panelData.label;
         panelTitle.textContent = panelData.title;
         panelCopy.textContent = panelData.copy;
       });

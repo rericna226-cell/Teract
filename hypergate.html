@@ -387,8 +387,11 @@
     .split-image {
       min-height: 560px;
       background:
-        radial-gradient(circle at 18% 20%, rgba(255,255,255,0.18), transparent 22%),
-        linear-gradient(135deg, #54c5ff, #17458c 58%, #0a1e40);
+        linear-gradient(135deg, rgba(0,0,0,0.12), rgba(0,0,0,0.55)),
+        url("Visuales/hypergate_1.png");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
       box-shadow: 0 20px 60px rgba(0,0,0,0.14);
     }
 
@@ -602,86 +605,8 @@
       text-align: left;
     }
 
-    .panel-image {
-      position: relative;
-      min-height: 300px;
-      border-radius: 22px;
-      overflow: hidden;
-      display: flex;
-      align-items: flex-end;
-      padding: 24px;
-      background:
-        radial-gradient(circle at 18% 20%, rgba(255,255,255,0.34), transparent 24%),
-        linear-gradient(135deg, rgba(47, 124, 255, 0.96), rgba(75, 229, 255, 0.82));
-    }
-
-    .panel-image::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(rgba(255,255,255,0.12) 1px, transparent 1px);
-      background-size: 100% 56px;
-      opacity: 0.24;
-    }
-
-    .panel-image::after {
-      content: "";
-      position: absolute;
-      inset: 16% 12%;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.22);
-      box-shadow:
-        0 0 0 26px rgba(255,255,255,0.05),
-        0 0 0 52px rgba(255,255,255,0.04);
-    }
-
-    .panel-image[data-tone="cv"] {
-      background:
-        radial-gradient(circle at 18% 20%, rgba(255,255,255,0.34), transparent 24%),
-        linear-gradient(135deg, #4be5ff, #123f93 82%);
-    }
-
-    .panel-image[data-tone="iv"] {
-      background:
-        radial-gradient(circle at 18% 20%, rgba(255,255,255,0.3), transparent 24%),
-        linear-gradient(135deg, #2f7cff, #06101f 82%);
-    }
-
-    .panel-image[data-tone="control"] {
-      background:
-        radial-gradient(circle at 18% 20%, rgba(255,255,255,0.3), transparent 24%),
-        linear-gradient(135deg, #1f4fa8, #4be5ff 82%);
-    }
-
-    .panel-image-overlay {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      height: 34%;
-      border-top: 1px solid rgba(255,255,255,0.22);
-      background: linear-gradient(90deg, rgba(255,255,255,0.06), rgba(6, 16, 31, 0.4));
-      box-shadow:
-        0 0 40px rgba(255, 255, 255, 0.06),
-        inset 0 0 50px rgba(255, 255, 255, 0.05);
-    }
-
-    .panel-image-label {
-      position: relative;
-      z-index: 1;
-      max-width: 320px;
-      padding: 12px 16px;
-      border-radius: 14px;
-      background: rgba(6, 16, 31, 0.55);
-      color: white;
-      font-size: 13px;
-      font-weight: 800;
-      letter-spacing: 1.8px;
-      text-transform: uppercase;
-    }
-
     .industry-panel h3 {
-      margin-top: 22px;
+      margin-top: 0;
       margin-bottom: 12px;
       font-size: 28px;
       line-height: 1.1;
@@ -1319,10 +1244,6 @@
         </div>
 
         <div class="industry-panel" id="industry-panel">
-          <div class="panel-image" id="panel-image" data-tone="wafer">
-            <div class="panel-image-overlay"></div>
-            <div class="panel-image-label" id="panel-image-label">Fabricación de lote inicial para validación</div>
-          </div>
           <h3 id="panel-title">Test wafer</h3>
           <p id="panel-copy">
             Fabricación de lote de prueba con la capa interfacial y stack de compuerta
@@ -1499,33 +1420,23 @@
       const validationPanels = {
         wafer: {
           title: "Test wafer",
-          copy: "Fabricación de lote de prueba con la capa interfacial y stack de compuerta definidos para evaluación eléctrica inicial.",
-          label: "Fabricación de lote inicial para validación",
-          tone: "wafer"
+          copy: "Fabricación de lote de prueba con la capa interfacial y stack de compuerta definidos para evaluación eléctrica inicial."
         },
         cv: {
           title: "Caracterización C-V",
-          copy: "Evaluación de control electrostático, capacitancia efectiva y comportamiento interfacial para validar el gate stack propuesto.",
-          label: "Control electrostático y capacitancia efectiva",
-          tone: "cv"
+          copy: "Evaluación de control electrostático, capacitancia efectiva y comportamiento interfacial para validar el gate stack propuesto."
         },
         iv: {
           title: "Mediciones I-V",
-          copy: "Medición de fuga de compuerta, corriente en reposo y respuesta eléctrica bajo condiciones de operación relevantes para nodos avanzados.",
-          label: "Fuga de compuerta y respuesta eléctrica",
-          tone: "iv"
+          copy: "Medición de fuga de compuerta, corriente en reposo y respuesta eléctrica bajo condiciones de operación relevantes para nodos avanzados."
         },
         control: {
           title: "Lote de control",
-          copy: "Comparación estadística contra estructuras tradicionales para validar mejora, repetibilidad y robustez del enfoque HyperGate V40.",
-          label: "Comparación estadística contra referencia",
-          tone: "control"
+          copy: "Comparación estadística contra estructuras tradicionales para validar mejora, repetibilidad y robustez del enfoque HyperGate V40."
         }
       };
 
       const industryButtons = document.querySelectorAll(".industry");
-      const panelImage = document.getElementById("panel-image");
-      const panelImageLabel = document.getElementById("panel-image-label");
       const panelTitle = document.getElementById("panel-title");
       const panelCopy = document.getElementById("panel-copy");
 
@@ -1541,8 +1452,6 @@
             item.setAttribute("aria-pressed", item === button ? "true" : "false");
           });
 
-          panelImage.dataset.tone = panelData.tone;
-          panelImageLabel.textContent = panelData.label;
           panelTitle.textContent = panelData.title;
           panelCopy.textContent = panelData.copy;
         });
