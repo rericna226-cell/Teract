@@ -702,101 +702,73 @@
       margin-bottom: 22px;
     }
 
-    .contact-form {
-      display: grid;
-      gap: 14px;
+    .contact-label {
+      display: block;
+      margin-bottom: 14px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #62738b;
     }
 
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
+    .contact-list {
+      margin: 0 0 24px;
+      padding-left: 20px;
+      color: var(--text-muted);
     }
 
-    .field {
-      display: grid;
-      gap: 8px;
+    .contact-list li {
+      margin-bottom: 10px;
     }
 
-    .field label {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--text-dark);
-      letter-spacing: 0.02em;
-    }
-
-    .field input,
-    .field select,
-    .field textarea {
-      width: 100%;
-      border: 1px solid rgba(6, 16, 31, 0.12);
-      border-radius: 16px;
-      background: #fff;
-      color: var(--text-dark);
-      padding: 14px 15px;
-      font: inherit;
-      outline: none;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .field input:focus,
-    .field select:focus,
-    .field textarea:focus {
-      border-color: rgba(47, 124, 255, 0.72);
-      box-shadow: 0 0 0 4px rgba(47, 124, 255, 0.16);
-    }
-
-    .field textarea {
-      min-height: 132px;
-      resize: vertical;
-    }
-
-    .form-actions {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-top: 6px;
-    }
-
-    .cta-form-card .btn-primary {
-      background: var(--bg-dark);
-      color: #fff;
-      border-color: var(--bg-dark);
-    }
-
-    .cta-form-card .btn-primary:hover {
-      background: var(--accent-blue);
-      border-color: var(--accent-blue);
-    }
-
-    .form-status {
-      font-size: 13px;
-      font-weight: 600;
-      color: #4b5f7a;
-    }
-
-    .form-note {
+    .contact-email-label {
+      margin: 0 0 8px;
       font-size: 13px;
       color: #62738b;
-      margin-top: 4px;
     }
 
-    .form-consent {
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
+    .contact-email {
+      display: block;
+      margin-bottom: 24px;
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text-dark);
+      text-decoration: none;
+    }
+
+    .contact-email:hover {
+      color: var(--accent-blue);
+    }
+
+    .contact-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 15px 24px;
+      border-radius: 999px;
+      background: var(--bg-dark);
+      color: #fff;
+      border: 1px solid var(--bg-dark);
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.25s ease;
+    }
+
+    .contact-button:hover {
+      background: var(--accent-blue);
+      border-color: var(--accent-blue);
+      transform: translateY(-2px);
+    }
+
+    .contact-note {
+      margin: 18px 0 0;
       font-size: 13px;
-      color: #30403f;
-      line-height: 1.45;
-      margin-top: 6px;
+      line-height: 1.55;
+      color: #62738b;
     }
 
-    .form-consent input {
-      margin-top: 3px;
-    }
-
-    .form-consent a {
+    .contact-note a {
       text-decoration: underline;
       text-underline-offset: 3px;
     }
@@ -857,9 +829,12 @@
       .solution-grid,
       .market-grid,
       .footer-grid,
-      .contact-grid,
-      .form-row {
+      .contact-grid {
         grid-template-columns: 1fr;
+      }
+
+      .contact-button {
+        width: 100%;
       }
 
       .benefit-grid {
@@ -995,7 +970,7 @@
 
       <div class="hero-actions">
         <a href="#problema" class="btn btn-primary">Explorar tecnología</a>
-        <a href="#contacto" class="btn btn-outline js-contact-interest" data-interest="whitepaper">Solicitar whitepaper</a>
+        <a href="#contacto" class="btn btn-outline">Solicitar whitepaper</a>
       </div>
     </div>
   </section>
@@ -1267,7 +1242,7 @@
       </p>
 
       <div class="cta-actions">
-        <a href="#contacto" class="btn btn-dark js-contact-interest" data-interest="whitepaper">Solicitar whitepaper</a>
+        <a href="#contacto" class="btn btn-dark">Solicitar whitepaper</a>
         <a href="hypergate-detalle.html" class="btn btn-primary">Ver detalle técnico</a>
       </div>
     </div>
@@ -1293,94 +1268,32 @@
       </div>
 
       <div class="cta-form-card">
-        <h3>Solicita información técnica</h3>
+        <h3>Solicita acceso técnico a HyperGate</h3>
         <p>
-          Completa el formulario y dirigimos tu solicitud a la ruta adecuada para
-          validación eléctrica, colaboración estratégica o revisión técnica confidencial.
+          Comparte la información base y dirigimos tu solicitud a la ruta adecuada para
+          whitepaper, validación GAA-FET, NDA o integración con foundry y fabless.
         </p>
 
-        <form class="contact-form" id="contact-form">
-          <div class="form-row">
-            <div class="field">
-              <label for="contact-name">Nombre</label>
-              <input id="contact-name" name="name" autocomplete="name" required />
-            </div>
+        <span class="contact-label">Incluye en tu mensaje</span>
+        <ul class="contact-list">
+          <li>Nombre</li>
+          <li>Empresa o institución</li>
+          <li>Sector</li>
+          <li>Interés principal</li>
+          <li>Nodo objetivo o contexto de evaluación</li>
+          <li>Teléfono de contacto (opcional)</li>
+          <li>Correo</li>
+        </ul>
 
-            <div class="field">
-              <label for="contact-company">Empresa o institución</label>
-              <input id="contact-company" name="company" autocomplete="organization" required />
-            </div>
-          </div>
+        <p class="contact-email-label">También puedes escribirnos directamente a</p>
+        <a class="contact-email" href="mailto:info@teract.com">info@teract.com</a>
 
-          <div class="form-row">
-            <div class="field">
-              <label for="contact-email">Email</label>
-              <input id="contact-email" name="email" type="email" autocomplete="email" required />
-            </div>
+        <a class="contact-button" href="mailto:info@teract.com?subject=Solicitud%20de%20acceso%20t%C3%A9cnico%20-%20HyperGate%20V40&body=Nombre%3A%0D%0AEmpresa%20o%20instituci%C3%B3n%3A%0D%0ASector%3A%0D%0AInter%C3%A9s%20principal%3A%0D%0ATel%C3%A9fono%3A%0D%0ACorreo%3A%0D%0A%0D%0ANodo%20objetivo%20u%20objetivo%20de%20evaluaci%C3%B3n%3A%0D%0A%0D%0AContexto%20t%C3%A9cnico%20o%20de%20integraci%C3%B3n%3A%0D%0A">Solicitar acceso técnico</a>
 
-            <div class="field">
-              <label for="contact-phone">Teléfono</label>
-              <input id="contact-phone" name="phone" type="tel" autocomplete="tel" placeholder="+__" required />
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="field">
-              <label for="contact-sector">Sector</label>
-              <select id="contact-sector" name="sector" required>
-                <option value="" selected disabled>Selecciona una opción</option>
-                <option value="semiconductores">Empresa de semiconductores</option>
-                <option value="fabless">Fabless</option>
-                <option value="idm">IDM</option>
-                <option value="foundry">Foundry</option>
-                <option value="investigacion">Centro de investigación / universidad</option>
-                <option value="defensa">Defensa / gobierno</option>
-                <option value="inversion">Inversión deep-tech</option>
-                <option value="otro">Otro</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label for="contact-interest">Interés</label>
-              <select id="contact-interest" name="interest" required>
-                <option value="" selected disabled>Selecciona una opción</option>
-                <option value="whitepaper">Revisar whitepaper</option>
-                <option value="nda">Solicitud de NDA</option>
-                <option value="validacion">Validación GAA-FET</option>
-                <option value="integracion">Integración con foundry o fabless</option>
-                <option value="tecnica">Conversación técnica</option>
-                <option value="otro">Otro</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="field">
-            <label for="contact-message">Mensaje</label>
-            <textarea
-              id="contact-message"
-              name="message"
-              required
-              placeholder="Comparte tu nodo objetivo, etapa de evaluación, interés de integración o el contexto técnico que necesitas discutir."
-            ></textarea>
-          </div>
-
-          <div class="form-consent">
-            <input id="contact-privacy" name="privacy" type="checkbox" value="accepted" required />
-            <label for="contact-privacy">
-              He leído y acepto el <a href="politica-privacidad.html">aviso de privacidad</a> y autorizo el
-              tratamiento de mis datos conforme a la LFPDPPP.
-            </label>
-          </div>
-
-          <div class="form-actions">
-            <button class="btn btn-primary" type="submit">Enviar solicitud</button>
-            <span class="form-status" id="contact-status" aria-live="polite"></span>
-          </div>
-
-          <div class="form-note">
-            El formulario prepara un correo dirigido a info@teract.com con tu solicitud.
-          </div>
-        </form>
+        <p class="contact-note">
+          Al contactarnos por correo electrónico, aceptas que tratemos los datos personales que nos proporciones conforme a nuestro
+          <a href="politica-privacidad.html">aviso de privacidad</a>.
+        </p>
       </div>
     </div>
   </section>
@@ -1492,77 +1405,6 @@
 
       window.addEventListener("resize", () => {
         if (window.innerWidth > 620) setOpen(false);
-      });
-    })();
-
-    (() => {
-      const form = document.getElementById("contact-form");
-      const status = document.getElementById("contact-status");
-      const sectorField = document.getElementById("contact-sector");
-      const interestField = document.getElementById("contact-interest");
-      const interestLinks = document.querySelectorAll(".js-contact-interest");
-
-      if (!form || !sectorField || !interestField) return;
-
-      const subjects = {
-        whitepaper: "Solicitud de whitepaper - HyperGate V40",
-        nda: "Solicitud de NDA - HyperGate V40",
-        validacion: "Validacion GAA-FET - HyperGate V40",
-        integracion: "Integracion con foundry o fabless - HyperGate V40",
-        tecnica: "Conversacion tecnica - HyperGate V40",
-        otro: "Consulta tecnica - HyperGate V40"
-      };
-
-      function setInterest(value) {
-        if (!value) return;
-        interestField.value = value;
-      }
-
-      const params = new URLSearchParams(window.location.search);
-      const initialInterest = params.get("interest");
-
-      if (initialInterest) {
-        setInterest(initialInterest);
-      }
-
-      interestLinks.forEach((link) => {
-        link.addEventListener("click", () => {
-          setInterest(link.dataset.interest);
-        });
-      });
-
-      form.addEventListener("submit", (event) => {
-        event.preventDefault();
-
-        const formData = new FormData(form);
-        const selectedSector = sectorField.options[sectorField.selectedIndex];
-        const sectorLabel = selectedSector ? selectedSector.text : "";
-        const selectedOption = interestField.options[interestField.selectedIndex];
-        const interestLabel = selectedOption ? selectedOption.text : "";
-        const interestValue = formData.get("interest");
-        const subject = subjects[interestValue] || "Consulta tecnica - HyperGate V40";
-        const body = [
-          "Nombre: " + (formData.get("name") || ""),
-          "Empresa o institucion: " + (formData.get("company") || ""),
-          "Email: " + (formData.get("email") || ""),
-          "Telefono: " + (formData.get("phone") || ""),
-          "Sector: " + sectorLabel,
-          "Interes: " + interestLabel,
-          "Privacidad: Aceptada",
-          "",
-          "Mensaje:",
-          formData.get("message") || ""
-        ].join("\n");
-
-        if (status) {
-          status.textContent = "Abriendo tu cliente de correo...";
-        }
-
-        window.location.href =
-          "mailto:info@teract.com?subject=" +
-          encodeURIComponent(subject) +
-          "&body=" +
-          encodeURIComponent(body);
       });
     })();
 
